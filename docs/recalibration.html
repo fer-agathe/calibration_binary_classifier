@@ -333,7 +333,7 @@ div.csl-indent {
 </header>
 
 <p>In this chapter, we explore different methods used in the literature to recalibrate a model. The basic idea is to learn a function <span class="math inline">\(g(\cdot)\)</span> mapping scores <span class="math inline">\(s(x)\)</span> into probability estimates <span class="math inline">\(g(p) := \mathbb{E}[D \mid s(x) = p]\)</span>. To avoid overfitting the training data while learning that mapping, we will rely on data from the calibration set.</p>
-<p>As in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>, we will transform the true probabilities <span class="math inline">\(p\)</span> of simulated data and consider these transformed values <span class="math inline">\(p^u\)</span> to be scores that could be returned by a classifier model.</p>
+<p>As in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>, we will transform the true probabilities <span class="math inline">\(p\)</span> of simulated data and consider these transformed values <span class="math inline">\(p^u\)</span> to be scores that could be returned by a classifier model.</p>
 <div class="cell">
 <details>
 <summary>Display the definitions of colors.</summary>
@@ -365,7 +365,7 @@ div.csl-indent {
 </div>
 <section id="data-generating-process" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="data-generating-process"><span class="header-section-number">2.1</span> Data Generating Process</h2>
-<p>We use the same DGP as that presented in <a href="#sec-dgp"><span class="quarto-unresolved-ref">sec-dgp</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>. Let us redefine here the function which simulates data.</p>
+<p>We use the same DGP as that presented in <a href="calibration.html#sec-dgp"><span>Section&nbsp;1.1</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>. Let us redefine here the function which simulates data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Simulates data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -440,7 +440,7 @@ Note
 </ol>
 </div>
 </div>
-<p>We define (as in the <a href="#sec-calibration">previous chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>) a function to create the splits.</p>
+<p>We define (as in the <a href="calibration.html">previous chapter&nbsp;<span>1</span></a>) a function to create the splits.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get calibration/test samples from the DGP</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -552,7 +552,7 @@ Note
 </div>
 <section id="platt-scaling" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="platt-scaling"><span class="header-section-number">2.2.1</span> Platt Scaling</h3>
-<p>Platt scaling <span class="citation" data-cites="platt1999probabilistic">(<a href="#ref-platt1999probabilistic" role="doc-biblioref">Platt et al. 1999</a>)</span> consists of applying logistic regression to <span class="math inline">\((d,s(x))\)</span> where <span class="math inline">\(d\)</span> denotes the binary outcome and <span class="math inline">\(s(x)\)</span> is the vector of predicted scores.</p>
+<p>Platt scaling <span class="citation" data-cites="platt1999probabilistic">(<a href="references.html#ref-platt1999probabilistic" role="doc-biblioref">Platt et al. 1999</a>)</span> consists of applying logistic regression to <span class="math inline">\((d,s(x))\)</span> where <span class="math inline">\(d\)</span> denotes the binary outcome and <span class="math inline">\(s(x)\)</span> is the vector of predicted scores.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic regression</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lr <span class="ot">&lt;-</span> <span class="fu">glm</span>(d <span class="sc">~</span> p_u, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">'logit'</span>), <span class="at">data =</span> data_all_calib)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -598,7 +598,7 @@ Note
 # ℹ 90 more rows</code></pre>
 </div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-platt">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-platt</span></a>.</p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="rf-recalibration.html#fig-recalib-platt">Figure&nbsp;<span>5.1</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -623,7 +623,7 @@ Note
 </section>
 <section id="isotonic-regression" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="isotonic-regression"><span class="header-section-number">2.2.2</span> Isotonic Regression</h3>
-<p>Isotonic regression is a non parametric approach using the pool-adjacent-violators (PAV) algorithm, introduced by <span class="citation" data-cites="Zadrozny_2002">Zadrozny and Elkan (<a href="#ref-Zadrozny_2002" role="doc-biblioref">2002</a>)</span>. In a nutshell, it assumes that the predicted scores of the initial model (random forest in this notebook) reproduces well the ranks of the observations. Under this assumption, the mapping <span class="math inline">\(g(\cdot)\)</span> from the scores <span class="math inline">\(s(x)\)</span> into the probabilities <span class="math inline">\(g(p)\)</span> is non-decreasing. It is then possible to use isotonic regression to learn the mapping. The PAV algorithm works as follows:</p>
+<p>Isotonic regression is a non parametric approach using the pool-adjacent-violators (PAV) algorithm, introduced by <span class="citation" data-cites="Zadrozny_2002">Zadrozny and Elkan (<a href="references.html#ref-Zadrozny_2002" role="doc-biblioref">2002</a>)</span>. In a nutshell, it assumes that the predicted scores of the initial model (random forest in this notebook) reproduces well the ranks of the observations. Under this assumption, the mapping <span class="math inline">\(g(\cdot)\)</span> from the scores <span class="math inline">\(s(x)\)</span> into the probabilities <span class="math inline">\(g(p)\)</span> is non-decreasing. It is then possible to use isotonic regression to learn the mapping. The PAV algorithm works as follows:</p>
 <ul>
 <li><p>At a given iteration: consider the ranked examples <span class="math inline">\(x_{i-1}\)</span> and <span class="math inline">\(x_{i}\)</span>.</p>
 <ul>
@@ -655,7 +655,7 @@ Note
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_c =</span> score_c_isotonic_linspace</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-isotonic">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-isotonic</span></a>.</p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="rf-recalibration.html#fig-recalib-isotonic">Figure&nbsp;<span>5.2</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -680,7 +680,7 @@ Note
 </section>
 <section id="beta-calibration" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="beta-calibration"><span class="header-section-number">2.2.3</span> Beta Calibration</h3>
-<p>Instead of fitting a logistic regression on the predicted values, as we know that the distribution of the values are bounded to <span class="math inline">\([0,1]\)</span>, it is possible to use beta calibration <span class="citation" data-cites="Kull_2017">Kull, Silva Filho, and Flach (<a href="#ref-Kull_2017" role="doc-biblioref">2017</a>)</span>. With this method, instead of assuming that the scores obtained by the classifier are normally distributed (as is the underlying assumption when using Platt scaling), the scores are assumed to follow a Beta distribution. We estimate : <span class="math display">\[\mu(s;a,b,c) = \frac{1}{1 + \frac{1}{e^c \frac{s^a}{(1-s)^b}}}\]</span></p>
+<p>Instead of fitting a logistic regression on the predicted values, as we know that the distribution of the values are bounded to <span class="math inline">\([0,1]\)</span>, it is possible to use beta calibration <span class="citation" data-cites="Kull_2017">Kull, Silva Filho, and Flach (<a href="references.html#ref-Kull_2017" role="doc-biblioref">2017</a>)</span>. With this method, instead of assuming that the scores obtained by the classifier are normally distributed (as is the underlying assumption when using Platt scaling), the scores are assumed to follow a Beta distribution. We estimate : <span class="math display">\[\mu(s;a,b,c) = \frac{1}{1 + \frac{1}{e^c \frac{s^a}{(1-s)^b}}}\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(betacal)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta calibration using the paper package</span></span>
@@ -710,7 +710,7 @@ Note
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p_c =</span> score_c_beta_linspace</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-beta">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-beta</span></a></p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="rf-recalibration.html#fig-recalib-beta">Figure&nbsp;<span>5.3</span></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -811,7 +811,7 @@ Attaching package: 'locfit'</code></pre>
 </div>
 </div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-locfic-0">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-locfic-0</span></a>, <a href="#fig-recalib-locfic-1">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-locfic-1</span></a>, and <a href="#fig-recalib-locfic-0">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-locfic-0</span></a></p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="rf-recalibration.html#fig-recalib-locfic-0">Figure&nbsp;<span>5.4</span></a>, <a href="rf-recalibration.html#fig-recalib-locfic-1">Figure&nbsp;<span>5.5</span></a>, and <a href="rf-recalibration.html#fig-recalib-locfic-0">Figure&nbsp;<span>5.4</span></a></p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Deg 0</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Deg 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Deg 2</a></li></ul>
 <div class="tab-content">
@@ -890,7 +890,7 @@ Attaching package: 'locfit'</code></pre>
 </section>
 <section id="simulations-setup" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="simulations-setup"><span class="header-section-number">2.3</span> Simulations: setup</h2>
-<p>Let us now consider multiple scenarios in which the scores are distorded by varying either <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> (see <a href="#sec-dgp"><span class="quarto-unresolved-ref">sec-dgp</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>).</p>
+<p>Let us now consider multiple scenarios in which the scores are distorded by varying either <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> (see <a href="calibration.html#sec-dgp"><span>Section&nbsp;1.1</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>).</p>
 <p>For each value of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span>, we will generate 200 replications of the whole process consisting in the following steps:</p>
 <ol type="1">
 <li>generate data from the PGD and transform true probabilities <span class="math inline">\(p\)</span> accordingly with either <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> to obtain <span class="math inline">\(p^u\)</span></li>
@@ -904,7 +904,7 @@ Attaching package: 'locfit'</code></pre>
 </ul>
 <section id="sec-recalib-helper-functions" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="sec-recalib-helper-functions"><span class="header-section-number">2.3.1</span> Helper Functions</h3>
-<p>We (re)define a helper function to compute standard metrics (see <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>):</p>
+<p>We (re)define a helper function to compute standard metrics (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -964,9 +964,9 @@ Attaching package: 'locfit'</code></pre>
 <span id="cb47-56"><a href="#cb47-56" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb47-57"><a href="#cb47-57" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We (re)define a few helper functions to compute calibration metrics (see <a href="#sec-measuring-calibration"><span class="quarto-unresolved-ref">sec-measuring-calibration</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>):</p>
+<p>We (re)define a few helper functions to compute calibration metrics (see <a href="calibration.html#sec-measuring-calibration"><span>Section&nbsp;1.2</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
 <ul>
-<li><code class="sourceCode r"><span class="fu">brier_score</span>()</code> to compute <strong>Brier Score</strong> (see <a href="#sec-brier-score"><span class="quarto-unresolved-ref">sec-brier-score</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>).</li>
+<li><code class="sourceCode r"><span class="fu">brier_score</span>()</code> to compute <strong>Brier Score</strong> (see <a href="calibration.html#sec-brier-score"><span>Section&nbsp;1.2.1.2</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>).</li>
 </ul>
 <div class="cell">
 <details>
@@ -975,7 +975,7 @@ Attaching package: 'locfit'</code></pre>
 </details>
 </div>
 <ul>
-<li><code class="sourceCode r"><span class="fu">e_calib_error</span>()</code> to compute the <strong>Expected Calibration Error</strong> (see <a href="#sec-ece"><span class="quarto-unresolved-ref">sec-ece</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>). This function relies on <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code> which computes summary statistics for binomial observed data and predicted scores returned by a model.</li>
+<li><code class="sourceCode r"><span class="fu">e_calib_error</span>()</code> to compute the <strong>Expected Calibration Error</strong> (see <a href="calibration.html#sec-ece"><span>Section&nbsp;1.2.1.3</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>). This function relies on <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code> which computes summary statistics for binomial observed data and predicted scores returned by a model.</li>
 </ul>
 <div class="cell">
 <details>
@@ -1058,7 +1058,7 @@ Attaching package: 'locfit'</code></pre>
 </details>
 </div>
 <ul>
-<li><code class="sourceCode r"><span class="fu">qmse_error</span>()</code> to compute <strong>Quantile-based MSE</strong> (see <a href="#sec-qmse"><span class="quarto-unresolved-ref">sec-qmse</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>). This function also relies on <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code>.</li>
+<li><code class="sourceCode r"><span class="fu">qmse_error</span>()</code> to compute <strong>Quantile-based MSE</strong> (see <a href="calibration.html#sec-qmse"><span>Section&nbsp;1.2.1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>). This function also relies on <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code>.</li>
 </ul>
 <div class="cell">
 <details>
@@ -1084,7 +1084,7 @@ Attaching package: 'locfit'</code></pre>
 </details>
 </div>
 <ul>
-<li><code class="sourceCode r"><span class="fu">wmse_error</span>()</code> to compute <strong>Weighted MSE</strong> (see <a href="#sec-wmse"><span class="quarto-unresolved-ref">sec-wmse</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>). This function relies on <code class="sourceCode r"><span class="fu">local_ci_scores</span>()</code> which identifies the nearest neighbors of a certain predicted score and then calculates the mean scores in that neighborhood accompanied with its confidence interval.</li>
+<li><code class="sourceCode r"><span class="fu">wmse_error</span>()</code> to compute <strong>Weighted MSE</strong> (see <a href="calibration.html#sec-wmse"><span>Section&nbsp;1.2.1.5</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>). This function relies on <code class="sourceCode r"><span class="fu">local_ci_scores</span>()</code> which identifies the nearest neighbors of a certain predicted score and then calculates the mean scores in that neighborhood accompanied with its confidence interval.</li>
 </ul>
 <div class="cell">
 <details>
@@ -1152,7 +1152,7 @@ Attaching package: 'locfit'</code></pre>
 </details>
 </div>
 <ul>
-<li><code class="sourceCode r"><span class="fu">local_calib_score</span>()</code> to compute <strong>Local Calibration Score</strong> (see <a href="#sec-calib-lcs"><span class="quarto-unresolved-ref">sec-calib-lcs</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>).</li>
+<li><code class="sourceCode r"><span class="fu">local_calib_score</span>()</code> to compute <strong>Local Calibration Score</strong> (see <a href="calibration.html#sec-calib-lcs"><span>Section&nbsp;1.2.1.6</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>).</li>
 </ul>
 <div class="cell">
 <details>
@@ -1197,7 +1197,7 @@ Attaching package: 'locfit'</code></pre>
 <span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Then, we define the <code class="sourceCode r"><span class="fu">recalibrate</span>()</code> function which recalibrate a model using the observed events <span class="math inline">\(d\)</span>, the predicted associated probabilities <span class="math inline">\(p^u\)</span> and a given recalibration technique (as presented above in <a href="#sec-recalibration-methods"><span class="quarto-unresolved-ref">sec-recalibration-methods</span></a>).</p>
+<p>Then, we define the <code class="sourceCode r"><span class="fu">recalibrate</span>()</code> function which recalibrate a model using the observed events <span class="math inline">\(d\)</span>, the predicted associated probabilities <span class="math inline">\(p^u\)</span> and a given recalibration technique (as presented above in <a href="#sec-recalibration-methods"><span>Section&nbsp;2.2</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Recalibrates scores using a calibration</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -1561,7 +1561,7 @@ Attaching package: 'locfit'</code></pre>
 </section>
 <section id="standard-metrics-on-simulations" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="standard-metrics-on-simulations"><span class="header-section-number">2.5</span> Standard Metrics on Simulations</h2>
-<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on recalibrated probabilities (see <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>), to which, initially, we have applied transformations:</p>
+<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on recalibrated probabilities (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>), to which, initially, we have applied transformations:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics for a replication</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -1755,7 +1755,7 @@ Attaching package: 'locfit'</code></pre>
 <span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>recalib_metrics_gamma <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(recalib_metrics_gamma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We (re)define function <code class="sourceCode r"><span class="fu">boxplot_simuls_metrics</span>()</code> from <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> (<a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>) to plot the standard metrics results on the recalibrated simulations. This function will produce a panel of boxplots. Each row of the panel will correspond to a metric whereas each column will correspond to a value for either <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span>. We also have one column for each recalibration method used. On each figure, the x-axis will correspond to the value used for the probability threshold <span class="math inline">\(\tau\)</span>, and the y-axis will correspond to the values of the metric.</p>
+<p>We (re)define function <code class="sourceCode r"><span class="fu">boxplot_simuls_metrics</span>()</code> from <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> (<a href="calibration.html">Chapter&nbsp;<span>1</span></a>) to plot the standard metrics results on the recalibrated simulations. This function will produce a panel of boxplots. Each row of the panel will correspond to a metric whereas each column will correspond to a value for either <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span>. We also have one column for each recalibration method used. On each figure, the x-axis will correspond to the value used for the probability threshold <span class="math inline">\(\tau\)</span>, and the y-axis will correspond to the values of the metric.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Boxplots for the simulations to visualize the distribution of some </span></span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' traditional metrics as a function of the probability threshold.</span></span>
@@ -1867,7 +1867,7 @@ Attaching package: 'locfit'</code></pre>
 <span id="cb63-108"><a href="#cb63-108" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb63-109"><a href="#cb63-109" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We aim to create a set of boxplots to visually assess the influence of probability transformations using <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> on standard metrics. Whenever <span class="math inline">\(\alpha \neq 1\)</span> or <span class="math inline">\(\gamma \neq 1\)</span>, the resulting scores <span class="math inline">\(p^c\)</span> represent values akin to those obtained from an initially uncalibrated model, with recalibration method applied. We want to verify that the recalibration methods applied to the uncalibrated probabilities do not degrade performance, as assessed by standard metrics. The results are shown in <a href="#fig-standard-metrics-calib-boxplot-alpha">Figure&nbsp;<span class="quarto-unresolved-ref">fig-standard-metrics-calib-boxplot-alpha</span></a> for vayring values of <span class="math inline">\(\alpha\)</span>, and in <a href="#fig-standard-metrics-calib-boxplot-gamma">Figure&nbsp;<span class="quarto-unresolved-ref">fig-standard-metrics-calib-boxplot-gamma</span></a> for vayring values of <span class="math inline">\(\gamma\)</span>.</p>
+<p>We aim to create a set of boxplots to visually assess the influence of probability transformations using <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> on standard metrics. Whenever <span class="math inline">\(\alpha \neq 1\)</span> or <span class="math inline">\(\gamma \neq 1\)</span>, the resulting scores <span class="math inline">\(p^c\)</span> represent values akin to those obtained from an initially uncalibrated model, with recalibration method applied. We want to verify that the recalibration methods applied to the uncalibrated probabilities do not degrade performance, as assessed by standard metrics. The results are shown in <a href="calibration.html#fig-standard-metrics-calib-boxplot-alpha">Figure&nbsp;<span>1.6</span></a> for vayring values of <span class="math inline">\(\alpha\)</span>, and in <a href="calibration.html#fig-standard-metrics-calib-boxplot-gamma">Figure&nbsp;<span>1.7</span></a> for vayring values of <span class="math inline">\(\gamma\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2148,12 +2148,12 @@ Note
 </section>
 <section id="calibration-maps-single-replication" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="calibration-maps-single-replication"><span class="header-section-number">2.6</span> Calibration Maps (single replication)</h2>
-<p>We can visualize the calibration curve as in <a href="#sec-calib-visualization"><span class="quarto-unresolved-ref">sec-calib-visualization</span></a> (<a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>).</p>
+<p>We can visualize the calibration curve as in <a href="calibration.html#sec-calib-visualization"><span>Section&nbsp;1.6</span></a> (<a href="calibration.html">Chapter&nbsp;<span>1</span></a>).</p>
 <section id="quantile-based-bins" class="level3" data-number="2.6.1">
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="quantile-based-bins"><span class="header-section-number">2.6.1</span> Quantile-Based Bins</h3>
 <p>We first visualize calibration in a fashion similar to what is done with the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.calibration.calibration_curve.html"><code class="sourceCode python">calibration_curve()</code> method from sci-kit learn</a>.</p>
 <p>The x-axis of the calibration plot reports the mean predicted probabilities computed on different bins, where the bins are defined using the deciles of the predicted scores. On the y-axis, the corresponding fraction of positive events (<span class="math inline">\(d=1\)</span>) are reported.</p>
-<p>We can visualize the calibration curve as in <a href="#sec-calib-visualization"><span class="quarto-unresolved-ref">sec-calib-visualization</span></a> (<a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>).</p>
+<p>We can visualize the calibration curve as in <a href="calibration.html#sec-calib-visualization"><span>Section&nbsp;1.6</span></a> (<a href="calibration.html">Chapter&nbsp;<span>1</span></a>).</p>
 <p>We can accompany the predictions made for each bin with a confidence interval, using the <code class="sourceCode r"><span class="fu">binom.confint</span>()</code> function from {binom}.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(binom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2687,7 +2687,7 @@ Note
 </section>
 <section id="calibration-curve-with-moving-average" class="level3" data-number="2.6.2">
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="calibration-curve-with-moving-average"><span class="header-section-number">2.6.2</span> Calibration Curve with Moving Average</h3>
-<p>The calibration curves will computed using the <code class="sourceCode r"><span class="fu">local_ci_scores</span>()</code> (defined in <a href="#sec-recalib-helper-functions"><span class="quarto-unresolved-ref">sec-recalib-helper-functions</span></a>) and accompanied by a confidence interval obtained using the <code class="sourceCode r"><span class="fu">binom.confint</span>()</code> function from {binom}.</p>
+<p>The calibration curves will computed using the <code class="sourceCode r"><span class="fu">local_ci_scores</span>()</code> (defined in <a href="#sec-recalib-helper-functions"><span>Section&nbsp;2.3.1</span></a>) and accompanied by a confidence interval obtained using the <code class="sourceCode r"><span class="fu">binom.confint</span>()</code> function from {binom}.</p>
 <p>Let us first focus on a single replication for which we can plot the calibration curve with its confidence interval.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>calibration_curve_ma_simul <span class="ot">&lt;-</span> <span class="cf">function</span>(simul, </span>
@@ -11547,7 +11547,7 @@ LCS
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Kull_2017" class="csl-entry" role="listitem">
 Kull, Meelis, Telmo M. Silva Filho, and Peter Flach. 2017. <span>“Beyond Sigmoids: How to Obtain Well-Calibrated Probabilities from Binary Classifiers with Beta Calibration.”</span> <em>Electronic Journal of Statistics</em> 11 (2). <a href="https://doi.org/10.1214/17-ejs1338si">https://doi.org/10.1214/17-ejs1338si</a>.
 </div>

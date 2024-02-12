@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this chapter, we recalibrate the predicted values estimated by a Random Forest (classifier and regressor), trained on simulated data (see <a href="#sec-ml-and-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-calibration</span></a>).</p>
+<p>In this chapter, we recalibrate the predicted values estimated by a Random Forest (classifier and regressor), trained on simulated data (see <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>).</p>
 <p>The basic idea is to learn a function <span class="math inline">\(g(\cdot)\)</span> mapping scores <span class="math inline">\(s(x)\)</span> into probability estimates <span class="math inline">\(g(p) := \mathbb{E}[D \mid s(x) = p]\)</span>. To avoid overfitting, the training data while learning that mapping, we will rely on data from the calibration set, defined in the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code>.</p>
 <p>To avoid overfitting, the data will be split into training (used to train the random forest), calibration (to recalibrate the scores) and test sets (to assess the performances on unseen data).</p>
 <div class="cell">
@@ -347,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="sec-ml-recalib-dgp" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-ml-recalib-dgp"><span class="header-section-number">5.1</span> Data Generating Process</h2>
-<p>We use the same DGP as in <a href="#sec-ml-and-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-calibration</span></a>.</p>
+<p>We use the same DGP as in <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Simulates data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -388,9 +388,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="splitting-the-dataset" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="splitting-the-dataset"><span class="header-section-number">5.2</span> Splitting the dataset</h2>
-<p>The process applied in this chapter is divided the following parts: 1. get the trained Random Forest classifier or regressions from <a href="#sec-ml-and-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-calibration</span></a> to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> (<em>i.e.</em>, either <span class="math inline">\(\hat{p}_{\text{score}}\)</span> or <span class="math inline">\(\hat{p}_{\text{vote}}\)</span>) 2. recalibrating the obtained scores through different approaches defined in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a> 3. recalculating the different calibration metrics on the recalibrated predicted scores.</p>
+<p>The process applied in this chapter is divided the following parts: 1. get the trained Random Forest classifier or regressions from <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a> to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> (<em>i.e.</em>, either <span class="math inline">\(\hat{p}_{\text{score}}\)</span> or <span class="math inline">\(\hat{p}_{\text{vote}}\)</span>) 2. recalibrating the obtained scores through different approaches defined in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a> 3. recalculating the different calibration metrics on the recalibrated predicted scores.</p>
 <p>Therefore, it is necessary to split the dataset into three parts: 1. a train set: to train the Random Forest classifier, 2. a calibration set: to train the recalibrator, 3. a test set: on which we will compute the calibration metrics.</p>
-<p>To split the data, use the <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="#sec-ml-and-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-calibration</span></a>.</p>
+<p>To split the data, use the <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get calibration/test samples from the DGP</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -438,7 +438,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We considered 200 replications for the simulations in <a href="#sec-ml-and-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-calibration</span></a>. In each simulation, we drew 2,000 observation from the data generation process.</p>
+<p>We considered 200 replications for the simulations in <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>. In each simulation, we drew 2,000 observation from the data generation process.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>n_repl <span class="ot">&lt;-</span> <span class="dv">200</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="dv">2000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -446,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="load-previous-simulations" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="load-previous-simulations"><span class="header-section-number">5.3</span> Load Previous Simulations</h2>
-<p>Let us load the simulations obtained in <a href="#sec-ml-and-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-calibration</span></a>. The regressions tasks:</p>
+<p>Let us load the simulations obtained in <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>. The regressions tasks:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"output/simulations/scores_simul_rf.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -535,7 +535,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 91 more rows</code></pre>
 </div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(\hat{s}\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-platt">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-platt</span></a>.</p>
+<p>The predicted probabilities <span class="math inline">\(\hat{s}\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-platt">Figure&nbsp;<span>5.1</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -584,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">scores_c =</span> score_c_isotonic_linspace</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-isotonic">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-isotonic</span></a>.</p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-isotonic">Figure&nbsp;<span>5.2</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -638,7 +638,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">scores_c =</span> score_c_beta_linspace</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-beta">Figure&nbsp;<span class="quarto-unresolved-ref">fig-recalib-beta</span></a></p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-beta">Figure&nbsp;<span>5.3</span></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -793,7 +793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="helper-functions" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="helper-functions"><span class="header-section-number">5.5</span> Helper Functions</h2>
-<p>First, we need the functions that fit the Random Forest (for both regression and classification) and the functions that compute the performance metrics and the calibration metrics (those defined in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>).</p>
+<p>First, we need the functions that fit the Random Forest (for both regression and classification) and the functions that compute the performance metrics and the calibration metrics (those defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>).</p>
 <section id="fit-the-random-forest" class="level3" data-number="5.5.1">
 <h3 data-number="5.5.1" class="anchored" data-anchor-id="fit-the-random-forest"><span class="header-section-number">5.5.1</span> Fit the Random Forest</h3>
 <p>In the case of regression:</p>
@@ -1093,7 +1093,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="recalibration-functions" class="level3" data-number="5.5.4">
 <h3 data-number="5.5.4" class="anchored" data-anchor-id="recalibration-functions"><span class="header-section-number">5.5.4</span> Recalibration Functions</h3>
-<p>We define the <code class="sourceCode r"><span class="fu">recalibrate</span>()</code> function which recalibrates a model using the observed events <span class="math inline">\(d\)</span>, the predicted associated probabilities <span class="math inline">\(p\)</span> and a given recalibration technique (as presented above in <a href="#sec-recalibration-methods"><span class="quarto-unresolved-ref">sec-recalibration-methods</span></a>).</p>
+<p>We define the <code class="sourceCode r"><span class="fu">recalibrate</span>()</code> function which recalibrates a model using the observed events <span class="math inline">\(d\)</span>, the predicted associated probabilities <span class="math inline">\(p\)</span> and a given recalibration technique (as presented above in <a href="recalibration.html#sec-recalibration-methods"><span>Section&nbsp;2.2</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Recalibrates scores using a calibration</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -1437,7 +1437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="recalibration-standard-metrics" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="recalibration-standard-metrics"><span class="header-section-number">5.7</span> Recalibration Standard Metrics</h2>
-<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on recalibrated predicted scores (see <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>):</p>
+<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on recalibrated predicted scores (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics for a replication</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -2665,7 +2665,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Now, we can plot the calibration curve on each sample (calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-c-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-c-rf</span></a> (regression), in <a href="#fig-calib-curve-quantile-c-rf-vote">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-c-rf-vote</span></a> (classification). The comparison between the two types of random forests are then made on a single grapg for each recalibration method from <a href="#fig-calib-curve-quantile-c-rf-both-platt">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-c-rf-both-platt</span></a> to <a href="#fig-calib-curve-quantile-c-rf-both-locfit2">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-c-rf-both-locfit2</span></a>.</p>
+<p>Now, we can plot the calibration curve on each sample (calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-c-rf">Figure&nbsp;<span>5.26</span></a> (regression), in <a href="#fig-calib-curve-quantile-c-rf-vote">Figure&nbsp;<span>5.27</span></a> (classification). The comparison between the two types of random forests are then made on a single grapg for each recalibration method from <a href="#fig-calib-curve-quantile-c-rf-both-platt">Figure&nbsp;<span>5.28</span></a> to <a href="#fig-calib-curve-quantile-c-rf-both-locfit2">Figure&nbsp;<span>5.33</span></a>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">

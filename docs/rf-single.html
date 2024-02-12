@@ -308,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this chapter, we examine the calibration of a random forest, before and after some recalibration of the scores is done by one of the techniques mentioned in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a>. We consider two cases: one in which the random forest performs a regression task, and another in which it performs a classification task. As in the previous chapters, we consider a binary outcome variable, drawn from the same data generating process as in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>In this chapter, we examine the calibration of a random forest, before and after some recalibration of the scores is done by one of the techniques mentioned in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a>. We consider two cases: one in which the random forest performs a regression task, and another in which it performs a classification task. As in the previous chapters, we consider a binary outcome variable, drawn from the same data generating process as in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <p>The basic idea is to learn a function <span class="math inline">\(g(\cdot)\)</span> mapping scores <span class="math inline">\(s(x)\)</span> into probability estimates <span class="math inline">\(g(p) := \mathbb{E}[D \mid s(x) = p]\)</span>. To avoid overfitting, the training data while learning that mapping, we will rely on data from the calibration set, defined in the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code>.</p>
 <p>To avoid overfitting, the data will be split into training (used to train the random forest), calibration (to recalibrate the scores) and test sets (to assess the performances on unseen data).</p>
 <div class="cell">
@@ -342,7 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="sec-ml-recalib-dgp" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-ml-recalib-dgp"><span class="header-section-number">3.1</span> Data Generating Process</h2>
-<p>We use the same DGP as in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>We use the same DGP as in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Simulates binary data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -385,8 +385,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="3.2" class="anchored" data-anchor-id="splitting-the-dataset"><span class="header-section-number">3.2</span> Splitting the dataset</h2>
 <p>The process applied in this chapter is divided the following parts:</p>
 <ol type="1">
-<li>get the trained Random Forest classifier or regressions from <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a> to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> (<em>i.e.</em>, either <span class="math inline">\(\hat{p}_{\text{score}}\)</span> or <span class="math inline">\(\hat{p}_{\text{vote}}\)</span>)</li>
-<li>recalibrating the obtained scores through different approaches defined in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a></li>
+<li>get the trained Random Forest classifier or regressions from <a href="calibration.html">Chapter&nbsp;<span>1</span></a> to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> (<em>i.e.</em>, either <span class="math inline">\(\hat{p}_{\text{score}}\)</span> or <span class="math inline">\(\hat{p}_{\text{vote}}\)</span>)</li>
+<li>recalibrating the obtained scores through different approaches defined in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a></li>
 <li>recalculating the different calibration metrics on the recalibrated predicted scores.</li>
 </ol>
 <p>Therefore, it is necessary to split the dataset into three parts:</p>
@@ -541,7 +541,7 @@ Important
 </div>
 <div class="callout-body-container callout-body">
 <p>The help page of the <code class="sourceCode r"><span class="fu">predict.randomForest</span>()</code> function states that setting the argument <code>type = prob</code> returns a matrix of class probabilities when the tree is a classifier (when <code class="sourceCode r">object<span class="sc">$</span>type</code> is <code>classification</code>). This does not seem to be the case.</p>
-<p>We will thus need a little trick to get the estimated probabilities of each tree, by growing the random forest in a regression context (as we will do in <a href="#sec-ml-and-calibration">Chapters&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-calibration</span></a>). As the response variable is binary with values 0 and 1, the regression tree and the classification tree are equivalent.</p>
+<p>We will thus need a little trick to get the estimated probabilities of each tree, by growing the random forest in a regression context (as we will do in <a href="rf-calibration.html">Chapters&nbsp;<span>4</span></a>). As the response variable is binary with values 0 and 1, the regression tree and the classification tree are equivalent.</p>
 </div>
 </div>
 <p>We can see that the predicted individual probabilities of positives are proportions of 1 in the <span class="math inline">\(n_T\)</span> trees of the forest:</p>
@@ -690,7 +690,7 @@ Important
 <p>We would like to have an idea about how well calibrated are both trained random forests. We will adopt two ways of looking at calibration: either with metrics, or visually, using graphs.</p>
 <section id="define-metrics" class="level3" data-number="3.5.1">
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="define-metrics"><span class="header-section-number">3.5.1</span> Define Metrics</h3>
-<p>We rely on the calibration metrics defined in in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>We rely on the calibration metrics defined in in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Brier Score</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">ECE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">QMSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">WMSE</a></li></ul>
 <div class="tab-content">
@@ -2055,7 +2055,7 @@ Important
 </section>
 <section id="recalibrate-the-random-forest" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="recalibrate-the-random-forest"><span class="header-section-number">3.6</span> Recalibrate the Random Forest</h2>
-<p>Now, we will recalibrate the random forests, using the various techniques explained in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a>.</p>
+<p>Now, we will recalibrate the random forests, using the various techniques explained in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a>.</p>
 <p>We will consider the following techniques:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>methods <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"platt"</span>, <span class="st">"isotonic"</span>, <span class="st">"beta"</span>, <span class="st">"locfit"</span>, <span class="st">"locfit"</span>, <span class="st">"locfit"</span>)</span>
@@ -2957,7 +2957,7 @@ Error in beta_calibration(p = data_calib$scores, y = data_calib$d, parameters = 
 
 </div>
 </div>
-<p>Let us print the results obtained before calibration (in <a href="#tbl-metrics-prior">Table&nbsp;<span class="quarto-unresolved-ref">tbl-metrics-prior</span></a>) here as well, for comparison:</p>
+<p>Let us print the results obtained before calibration (in <a href="#tbl-metrics-prior">Table&nbsp;<span>3.1</span></a>) here as well, for comparison:</p>
 <div class="cell">
 <details>
 <summary>Display the R codes used to produce the Table.</summary>

@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this chapter, we measure the calibration metrics defined in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a> on a Random Forest classifier trained on simulated data. Subsequently, we explore the different recalibration methods presented in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a> to recalibrate the predicted scores obtained from the Random Forest. Thus, we no longer work with the transformed probabilities <span class="math inline">\(p_u\)</span> but directly with the predicted scores obtained from the Random Forest <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span>. To avoid overfitting, the data will be split into training (used to train the random forest), calibration (to recalibrate the scores) and test sets (to assess the performances on unseen data).</p>
+<p>In this chapter, we measure the calibration metrics defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a> on a Random Forest classifier trained on simulated data. Subsequently, we explore the different recalibration methods presented in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a> to recalibrate the predicted scores obtained from the Random Forest. Thus, we no longer work with the transformed probabilities <span class="math inline">\(p_u\)</span> but directly with the predicted scores obtained from the Random Forest <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span>. To avoid overfitting, the data will be split into training (used to train the random forest), calibration (to recalibrate the scores) and test sets (to assess the performances on unseen data).</p>
 <div class="cell">
 <details>
 <summary>Display the definitions of colors.</summary>
@@ -347,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="sec-ml-recalib-dgp" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-ml-recalib-dgp"><span class="header-section-number">4.1</span> Data Generating Process</h2>
-<p>We use the same DGP as that presented in <a href="#sec-dgp"><span class="quarto-unresolved-ref">sec-dgp</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>. However, here, we only need the observed events <span class="math inline">\(d\)</span> and the different features <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span>. Let us redefine here the function which simulates a single dataset:</p>
+<p>We use the same DGP as that presented in <a href="calibration.html#sec-dgp"><span>Section&nbsp;1.1</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>. However, here, we only need the observed events <span class="math inline">\(d\)</span> and the different features <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span>. Let us redefine here the function which simulates a single dataset:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Simulates data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -388,9 +388,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="splitting-the-dataset" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="splitting-the-dataset"><span class="header-section-number">4.2</span> Splitting the dataset</h2>
-<p>The process applied in this chapter is divided into two parts: 1. training the Random Forest classifier to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> 2. calculating the different calibration metrics presented in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a></p>
+<p>The process applied in this chapter is divided into two parts: 1. training the Random Forest classifier to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> 2. calculating the different calibration metrics presented in <a href="calibration.html">Chapter&nbsp;<span>1</span></a></p>
 <p>We split the dataset into three parts: 1. a train set: to train the Random Forest classifier, 2. a calibration set: to train the recalibrator, 3. a test set: on which we will compute the calibration metrics.</p>
-<p>To split the data, we modify the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a> to obtain three different sets instead of two:</p>
+<p>To split the data, we modify the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="calibration.html">Chapter&nbsp;<span>1</span></a> to obtain three different sets instead of two:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get calibration/test samples from the DGP</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -457,7 +457,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Using a Random Forest regressor for classification task provides actual probability scores whereas a Random Forest classifier yields, for one observation, the average predicted classes across the ensemble of trees (see <a href="#sec-rf-calib-aggregating"><span class="quarto-unresolved-ref">sec-rf-calib-aggregating</span></a>).</p>
+<p>Using a Random Forest regressor for classification task provides actual probability scores whereas a Random Forest classifier yields, for one observation, the average predicted classes across the ensemble of trees (see <a href="rf-single.html#sec-rf-calib-aggregating"><span>Section&nbsp;3.3</span></a>).</p>
 </div>
 </div>
 <div class="cell">
@@ -538,7 +538,7 @@ Note
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We save the results for later use (in <a href="#sec-ml-and-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-recalibration</span></a>).</p>
+<p>We save the results for later use (in <a href="rf-recalibration.html">Chapter&nbsp;<span>5</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(scores_simul_rf, <span class="at">file =</span> <span class="st">"output/simulations/scores_simul_rf.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -924,7 +924,7 @@ Note
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We save the results for later use (in <a href="#sec-ml-and-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-recalibration</span></a>).</p>
+<p>We save the results for later use (in <a href="rf-recalibration.html">Chapter&nbsp;<span>5</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(scores_simul_rf_vote, <span class="at">file =</span> <span class="st">"output/simulations/scores_simul_rf_vote.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1032,7 +1032,7 @@ Note
 </div>
 </div>
 </div>
-<p>Now, we can look at these distributions on all replications by applying the function <code class="sourceCode r"><span class="fu">calib_dist_rf</span>()</code>, defined in the section <a href="#sec-rf-calib-regression"><span class="quarto-unresolved-ref">sec-rf-calib-regression</span></a>:</p>
+<p>Now, we can look at these distributions on all replications by applying the function <code class="sourceCode r"><span class="fu">calib_dist_rf</span>()</code>, defined in the section <a href="#sec-rf-calib-regression"><span>Section&nbsp;4.3</span></a>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>nb_cores <span class="ot">&lt;-</span> future<span class="sc">::</span><span class="fu">availableCores</span>()<span class="sc">-</span><span class="dv">1</span></span>
@@ -1154,10 +1154,10 @@ Note
 </section>
 <section id="sec-rf-gof-metrics" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="sec-rf-gof-metrics"><span class="header-section-number">4.5</span> Standard Metrics</h2>
-<p>Let us have a look at the goodness of fit of the random forests obtained in both cases (regression or classification). To do so, we compute the standard performance metrics defined in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>Let us have a look at the goodness of fit of the random forests obtained in both cases (regression or classification). To do so, we compute the standard performance metrics defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <section id="sec-rf-gof-metrics-functions" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-rf-gof-metrics-functions"><span class="header-section-number">4.5.1</span> Helper Functions</h3>
-<p>We (re)define a helper function to compute standard metrics (see <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>):</p>
+<p>We (re)define a helper function to compute standard metrics (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -1217,7 +1217,7 @@ Note
 <span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on predicted scores of one replication (see <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>):</p>
+<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on predicted scores of one replication (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics for a replication</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -1341,7 +1341,7 @@ Note
 </section>
 <section id="results" class="level3" data-number="4.5.3">
 <h3 data-number="4.5.3" class="anchored" data-anchor-id="results"><span class="header-section-number">4.5.3</span> Results</h3>
-<p>Let us visualize how the performance metrics vary from one replication to another, on the test set. The boxplots are shown in <a href="#fig-metrics-gof-rf-regression">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-gof-rf-regression</span></a> (regression) and in <a href="#fig-metrics-gof-rf-classification">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-gof-rf-classification</span></a> (classification).</p>
+<p>Let us visualize how the performance metrics vary from one replication to another, on the test set. The boxplots are shown in <a href="#fig-metrics-gof-rf-regression">Figure&nbsp;<span>4.9</span></a> (regression) and in <a href="#fig-metrics-gof-rf-classification">Figure&nbsp;<span>4.10</span></a> (classification).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Boxplots for the simulations to visualize the distribution of some </span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' traditional metrics as a function of the probability threshold.</span></span>
@@ -1440,7 +1440,7 @@ Note
 </section>
 <section id="sec-rf-calib-metrics" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="sec-rf-calib-metrics"><span class="header-section-number">4.6</span> Calibration Metrics</h2>
-<p>Let us have a look at the calibration of the random forests obtained in both cases (regression or classification). To do so, we compute the calibration metrics defined in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>Let us have a look at the calibration of the random forests obtained in both cases (regression or classification). To do so, we compute the calibration metrics defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <section id="sec-calib-rf-metrics-functions" class="level3" data-number="4.6.1">
 <h3 data-number="4.6.1" class="anchored" data-anchor-id="sec-calib-rf-metrics-functions"><span class="header-section-number">4.6.1</span> Helper Functions</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1626,7 +1626,7 @@ Note
 </section>
 <section id="calculating-the-metrics" class="level3" data-number="4.6.2">
 <h3 data-number="4.6.2" class="anchored" data-anchor-id="calculating-the-metrics"><span class="header-section-number">4.6.2</span> Calculating the Metrics</h3>
-<p>Next, we define the function <code class="sourceCode r"><span class="fu">calib_metrics_rf_uncalib</span>()</code> which computes the true MSE and the calibration metrics from <a href="#sec-calibration"><span class="quarto-unresolved-ref">sec-calibration</span></a>, from a single replication of the simulations.</p>
+<p>Next, we define the function <code class="sourceCode r"><span class="fu">calib_metrics_rf_uncalib</span>()</code> which computes the true MSE and the calibration metrics from <a href="calibration.html"><span>Chapter&nbsp;1</span></a>, from a single replication of the simulations.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes calibration metrics on a simulation, with uncalibrated scores</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -1811,7 +1811,7 @@ Note
 </section>
 <section id="results-1" class="level3" data-number="4.6.3">
 <h3 data-number="4.6.3" class="anchored" data-anchor-id="results-1"><span class="header-section-number">4.6.3</span> Results</h3>
-<p>Let us visualize how the metrics vary from one replication to another, on the train set, on the calibration set, and on the test set. Note that since we did not recalibrate the scores <span class="math inline">\(s(\boldsymbol x)\)</span>, the calibration and the test set should exhibit similar values for the different metrics: they both are unseen data from the same DGP. The boxplots are shown in <a href="#fig-metrics-calibration-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-calibration-rf</span></a> (regression) and in <a href="#fig-metrics-calibration-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-calibration-rf-both</span></a> (classification).</p>
+<p>Let us visualize how the metrics vary from one replication to another, on the train set, on the calibration set, and on the test set. Note that since we did not recalibrate the scores <span class="math inline">\(s(\boldsymbol x)\)</span>, the calibration and the test set should exhibit similar values for the different metrics: they both are unseen data from the same DGP. The boxplots are shown in <a href="#fig-metrics-calibration-rf">Figure&nbsp;<span>4.11</span></a> (regression) and in <a href="#fig-metrics-calibration-rf-both">Figure&nbsp;<span>4.13</span></a> (classification).</p>
 <section id="regression-3" class="level4" data-number="4.6.3.1">
 <h4 data-number="4.6.3.1" class="anchored" data-anchor-id="regression-3"><span class="header-section-number">4.6.3.1</span> Regression</h4>
 <p>First, let us turn the <code>sample</code> column of the results as a factor.</p>
@@ -1859,7 +1859,7 @@ Note
 </div>
 </div>
 </div>
-<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf">Table&nbsp;<span class="quarto-unresolved-ref">tbl-summary-stats-rf</span></a>.</p>
+<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf">Table&nbsp;<span>4.1</span></a>.</p>
 <div class="cell">
 <details>
 <summary>Display the R codes used to produce the Table.</summary>
@@ -2128,7 +2128,7 @@ Note
 </div>
 </div>
 </div>
-<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf-vote">Table&nbsp;<span class="quarto-unresolved-ref">tbl-summary-stats-rf-vote</span></a>.</p>
+<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf-vote">Table&nbsp;<span>4.2</span></a>.</p>
 <div class="cell">
 <details>
 <summary>Display the R codes used to produce the Table.</summary>
@@ -2412,12 +2412,12 @@ Note
 </section>
 <section id="sec-rf-calib-viz" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="sec-rf-calib-viz"><span class="header-section-number">4.7</span> Calibration Visualizations</h2>
-<p>Let us now turn to visualization techniques to observe the calibration of random forest, as in <a href="#sec-calib-visualization"><span class="quarto-unresolved-ref">sec-calib-visualization</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>Let us now turn to visualization techniques to observe the calibration of random forest, as in <a href="calibration.html#sec-calib-visualization"><span>Section&nbsp;1.6</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <section id="sec-calib-rf-viz-functions" class="level3" data-number="4.7.1">
 <h3 data-number="4.7.1" class="anchored" data-anchor-id="sec-calib-rf-viz-functions"><span class="header-section-number">4.7.1</span> Helper Functions</h3>
 <section id="sec-ml-calib-rf-quantile-based-bins" class="level4" data-number="4.7.1.1">
 <h4 data-number="4.7.1.1" class="anchored" data-anchor-id="sec-ml-calib-rf-quantile-based-bins"><span class="header-section-number">4.7.1.1</span> Quantile-Based Bins</h4>
-<p>We rely here on the <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code> function defined in the helper functions (<a href="#sec-calib-rf-metrics-functions"><span class="quarto-unresolved-ref">sec-calib-rf-metrics-functions</span></a>) for the ECE.</p>
+<p>We rely here on the <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code> function defined in the helper functions (<a href="#sec-calib-rf-metrics-functions"><span>Section&nbsp;4.6.1</span></a>) for the ECE.</p>
 <p>Let us define a function, <code class="sourceCode r"><span class="fu">calib_curve_quant_simul_rf</span>()</code>, to get the calibration curve for a single simulation of the random forest.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get the calibration curve for one simulation for the random forest,</span></span>
@@ -2681,7 +2681,7 @@ Note
 </div>
 </div>
 </div>
-<p>Now, we can plot the calibration curve on each sample (train, calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-rf</span></a> (regression), in <a href="#fig-calib-curve-quantile-rf-vote">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-rf-vote</span></a> (classification), and in <a href="#fig-calib-curve-quantile-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-rf-both</span></a> (comparison of the two).</p>
+<p>Now, we can plot the calibration curve on each sample (train, calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-rf">Figure&nbsp;<span>4.14</span></a> (regression), in <a href="#fig-calib-curve-quantile-rf-vote">Figure&nbsp;<span>4.15</span></a> (classification), and in <a href="#fig-calib-curve-quantile-rf-both">Figure&nbsp;<span>4.16</span></a> (comparison of the two).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">
@@ -2885,7 +2885,7 @@ Note
 </div>
 </div>
 <p>Lastly, we can plot the calibration curve obtained with local regressions on each sample (train, calibration, test). Contrary to the calibration curve obtained with the quantile-defined bins, we do not need to plot all the curves: the mean predicted probability is predicted at different values over the segment [0,1], and not only computed in bins for which the cutoff are a function of the data.</p>
-<p>The curves are shown in <a href="#fig-calib-curve-locfit-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-locfit-rf</span></a> (regression), in <a href="#fig-calib-curve-locfit-rf-vote">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-locfit-rf-vote</span></a> (classification), and in <a href="#fig-calib-curve-locfit-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-locfit-rf-both</span></a> (comparison of the two).</p>
+<p>The curves are shown in <a href="#fig-calib-curve-locfit-rf">Figure&nbsp;<span>4.17</span></a> (regression), in <a href="#fig-calib-curve-locfit-rf-vote">Figure&nbsp;<span>4.18</span></a> (classification), and in <a href="#fig-calib-curve-locfit-rf-both">Figure&nbsp;<span>4.19</span></a> (comparison of the two).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">
@@ -3124,7 +3124,7 @@ Note
 </div>
 </div>
 <p>Lastly, we can plot the calibration curve obtained with moving averages on each sample (train, calibration, test).</p>
-<p>The curves are shown in <a href="#fig-calib-curve-ma-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-ma-rf</span></a> (regression), <a href="#fig-calib-curve-ma-rf-vote">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-ma-rf-vote</span></a> (classification), and in <a href="#fig-calib-curve-ma-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-ma-rf-both</span></a> (comparison of the two).</p>
+<p>The curves are shown in <a href="#fig-calib-curve-ma-rf">Figure&nbsp;<span>4.20</span></a> (regression), <a href="#fig-calib-curve-ma-rf-vote">Figure&nbsp;<span>4.21</span></a> (classification), and in <a href="#fig-calib-curve-ma-rf-both">Figure&nbsp;<span>4.22</span></a> (comparison of the two).</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">
