@@ -46,6 +46,9 @@ get_samples <- function(seed,
 #' @param train_data train dataset
 #' @param calib_data calibration dataset
 #' @param test_data test dataset
+#' @param mtry number of variables to consider at each split
+#' @param nodesize min number of of obs. in terminal note
+#' @param ntree number of trees to grow
 #'
 #' @return predicted scores on train, calibration, and test sets
 apply_rf <- function(train_data,
@@ -53,16 +56,14 @@ apply_rf <- function(train_data,
                      test_data,
                      mtry = max(floor(ncol(train_data)/3), 1),
                      nodesize = 1,
-                     ntree = 500,
-                     splitrule = "gini") {
+                     ntree = 500) {
 
   rf <- randomForest(
     d ~ .,
     data = train_data,
     mtry = mtry,
     nodesize = nodesize,
-    ntree = ntree,
-    splitrule =  splitrule
+    ntree = ntree
   )
 
   scores_train <- predict(rf, newdata = train_data, type = "response")
@@ -81,6 +82,9 @@ apply_rf <- function(train_data,
 #' @param train_data train dataset
 #' @param calib_data calibration dataset
 #' @param test_data test dataset
+#' @param mtry number of variables to consider at each split
+#' @param nodesize min number of of obs. in terminal note
+#' @param ntree number of trees to grow
 #'
 #' @return predicted scores on train, calibration, and test sets
 apply_rf_vote <- function(train_data,
@@ -88,15 +92,13 @@ apply_rf_vote <- function(train_data,
                           test_data,
                           mtry = 1,
                           nodesize = 0.1 * nrow(train_data),
-                          ntree = 500,
-                          splitrule = "gini") {
+                          ntree = 500) {
   rf <- randomForest(
     d ~ .,
     data = train_data |> mutate(d = factor(d)),
     mtry = mtry,
     nodesize = nodesize,
-    ntree = ntree,
-    splitrule =  splitrule,
+    ntree = ntree
   )
 
   scores_train <- predict(rf, newdata = train_data, type = "vote")[, "1"]
@@ -134,14 +136,12 @@ simul_calib_rf <- function(seed,
       nodesize <- best_params_rf_reg$nodesize
       mtry <- best_params_rf_reg$mtry
       ntree <- best_params_rf_reg$num_trees
-      splitrule <- best_params_rf_reg$splitrule
     } else {
       # Use default values from `randomForest()`
       nodesize <- 5
       # nodesize <- 0.1 * nrow(tb_train)
       mtry <- max(floor(ncol(tb_train)/3), 1)
       ntree <- 500
-      splitrule <- "gini"
     }
 
     # Regression
@@ -151,8 +151,7 @@ simul_calib_rf <- function(seed,
       test_data = tb_test,
       mtry = mtry,
       nodesize = nodesize,
-      ntree = ntree,
-      splitrule = splitrule
+      ntree = ntree
     )
     scores <- scores_reg
   } else {
@@ -161,13 +160,11 @@ simul_calib_rf <- function(seed,
       nodesize <- best_params_rf_classif$nodesize
       mtry <- best_params_rf_classif$mtry
       ntree <- best_params_rf_classif$num_trees
-      splitrule <- best_params_rf_classif$splitrule
     } else {
       # Use default values from `randomForest()`
       nodesize <- 0.1 * nrow(tb_train)
       mtry <- max(floor(ncol(tb_train)/3), 1)
       ntree <- 500
-      splitrule <- "gini"
     }
     # Classification
     scores_classif <- apply_rf_vote(
@@ -176,8 +173,7 @@ simul_calib_rf <- function(seed,
       test_data = tb_test,
       mtry = mtry,
       nodesize = nodesize,
-      ntree = ntree,
-      splitrule = splitrule
+      ntree = ntree
     )
     scores <- scores_classif
   }

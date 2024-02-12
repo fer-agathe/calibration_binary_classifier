@@ -434,24 +434,23 @@ The following object is masked from 'package:purrr':
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_trees =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">300</span>, <span class="dv">500</span>),</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mtry =</span> <span class="fu">seq</span>(<span class="dv">1</span>,(<span class="fu">ncol</span>(tb_train)<span class="sc">/</span><span class="dv">2</span>)),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nodesize =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>),</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">splitrule =</span> <span class="st">"gini"</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>grid_params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nodesize =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>grid_params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 144 × 4
-   num_trees  mtry nodesize splitrule
-       &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;    
- 1       100     1        5 gini     
- 2       100     1       10 gini     
- 3       100     1       15 gini     
- 4       100     1       20 gini     
- 5       100     2        5 gini     
- 6       100     2       10 gini     
- 7       100     2       15 gini     
- 8       100     2       20 gini     
- 9       100     3        5 gini     
-10       100     3       10 gini     
+<pre><code># A tibble: 144 × 3
+   num_trees  mtry nodesize
+       &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
+ 1       100     1        5
+ 2       100     1       10
+ 3       100     1       15
+ 4       100     1       20
+ 5       100     2        5
+ 6       100     2       10
+ 7       100     2       15
+ 8       100     2       20
+ 9       100     3        5
+10       100     3       10
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -494,37 +493,35 @@ The following object is masked from 'package:purrr':
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">mtry =</span> grid_params<span class="sc">$</span>mtry[.x], </span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">nodesize =</span> grid_params<span class="sc">$</span>nodesize[.x], </span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">ntree =</span> grid_params<span class="sc">$</span>num_trees[.x],</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">splitrule =</span>  grid_params<span class="sc">$</span>splitrule[.x],</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">keep.inbag =</span> <span class="cn">TRUE</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>      num_trees <span class="ot">&lt;-</span> grid_params<span class="sc">$</span>num_trees[.x]</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Identify out of bag observations in each tree</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>      out_of_bag <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tb_train), <span class="at">.f =</span> <span class="sc">~</span><span class="fu">which</span>(rf[[<span class="st">"inbag"</span>]][.x,] <span class="sc">==</span> <span class="dv">0</span>))</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>      rf_pred_all <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, tb_train,</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>                             <span class="at">predict.all =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                             <span class="at">type =</span> <span class="st">"response"</span>)<span class="sc">$</span>individual</span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>      rf_pred <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">map</span>(<span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tb_train), <span class="at">.f =</span> <span class="sc">~</span><span class="fu">mean</span>(rf_pred_all[.x,out_of_bag[[.x]]])))</span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>      oob_err <span class="ot">&lt;-</span> <span class="fu">mse_function</span>(<span class="at">pred =</span> rf_pred, <span class="at">obs =</span> tb_train <span class="sc">|&gt;</span> <span class="fu">pull</span>(d))</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>      mse_oob <span class="ot">&lt;-</span> oob_err</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Progress bar</span></span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>()</span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Return object:</span></span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">mtry =</span> grid_params<span class="sc">$</span>mtry[.x], </span>
-<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">nodesize =</span> grid_params<span class="sc">$</span>nodesize[.x], </span>
-<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">num_trees =</span> grid_params<span class="sc">$</span>num_trees[.x],</span>
-<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">splitrule =</span>  grid_params<span class="sc">$</span>splitrule[.x],</span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">mse_oob =</span> mse_oob</span>
-<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">.options =</span> furrr<span class="sc">::</span><span class="fu">furrr_options</span>(<span class="at">seed =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">keep.inbag =</span> <span class="cn">TRUE</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>      num_trees <span class="ot">&lt;-</span> grid_params<span class="sc">$</span>num_trees[.x]</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Identify out of bag observations in each tree</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>      out_of_bag <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tb_train), <span class="at">.f =</span> <span class="sc">~</span><span class="fu">which</span>(rf[[<span class="st">"inbag"</span>]][.x,] <span class="sc">==</span> <span class="dv">0</span>))</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>      rf_pred_all <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf, tb_train,</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>                             <span class="at">predict.all =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>                             <span class="at">type =</span> <span class="st">"response"</span>)<span class="sc">$</span>individual</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>      rf_pred <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">map</span>(<span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tb_train), <span class="at">.f =</span> <span class="sc">~</span><span class="fu">mean</span>(rf_pred_all[.x,out_of_bag[[.x]]])))</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>      oob_err <span class="ot">&lt;-</span> <span class="fu">mse_function</span>(<span class="at">pred =</span> rf_pred, <span class="at">obs =</span> tb_train <span class="sc">|&gt;</span> <span class="fu">pull</span>(d))</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>      mse_oob <span class="ot">&lt;-</span> oob_err</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Progress bar</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>()</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Return object:</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">mtry =</span> grid_params<span class="sc">$</span>mtry[.x], </span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">nodesize =</span> grid_params<span class="sc">$</span>nodesize[.x], </span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">num_trees =</span> grid_params<span class="sc">$</span>num_trees[.x],</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">mse_oob =</span> mse_oob</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">.options =</span> furrr<span class="sc">::</span><span class="fu">furrr_options</span>(<span class="at">seed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let us order the computed out-of-bag MSE by ascending values:</p>
 <div class="cell">
@@ -543,151 +540,151 @@ The following object is masked from 'package:purrr':
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>best_params_rf_reg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    mtry nodesize num_trees splitrule   mse_oob
-1     12        5       500      gini 0.1161355
-2     11        5       500      gini 0.1167286
-3     10        5       500      gini 0.1167594
-4     11        5       300      gini 0.1168635
-5     10        5       300      gini 0.1170744
-6      9        5       300      gini 0.1172085
-7      9        5       500      gini 0.1172791
-8     12        5       300      gini 0.1173561
-9      8        5       500      gini 0.1175019
-10     8        5       300      gini 0.1181500
-11     7        5       500      gini 0.1182748
-12     6        5       500      gini 0.1184314
-13     7        5       300      gini 0.1187873
-14     6        5       300      gini 0.1194305
-15     5        5       500      gini 0.1195314
-16    11        5       100      gini 0.1195434
-17    12        5       100      gini 0.1198150
-18     9        5       100      gini 0.1198567
-19    10        5       100      gini 0.1201343
-20     4        5       500      gini 0.1206271
-21     7        5       100      gini 0.1206874
-22     5        5       300      gini 0.1206969
-23    12       10       500      gini 0.1208994
-24    11       10       500      gini 0.1210198
-25    11       10       300      gini 0.1211552
-26     8        5       100      gini 0.1211788
-27    12       10       300      gini 0.1212391
-28    10       10       500      gini 0.1213147
-29     4        5       300      gini 0.1214632
-30     9       10       500      gini 0.1217760
-31    10       10       300      gini 0.1220816
-32     9       10       300      gini 0.1222290
-33     6        5       100      gini 0.1222443
-34     8       10       300      gini 0.1222482
-35     8       10       500      gini 0.1225779
-36     7       10       500      gini 0.1226872
-37     3        5       500      gini 0.1227032
-38     5        5       100      gini 0.1230636
-39     3        5       300      gini 0.1230863
-40    11       10       100      gini 0.1232123
-41    12       10       100      gini 0.1234719
-42     4        5       100      gini 0.1234766
-43     7       10       300      gini 0.1236268
-44     6       10       500      gini 0.1236749
-45    10       10       100      gini 0.1238468
-46     6       10       300      gini 0.1241986
-47    12       15       500      gini 0.1243726
-48     8       10       100      gini 0.1245897
-49     5       10       500      gini 0.1248403
-50    11       15       500      gini 0.1248550
-51     9       10       100      gini 0.1248996
-52    11       15       300      gini 0.1250312
-53    12       15       300      gini 0.1251028
-54    10       15       500      gini 0.1252682
-55     5       10       300      gini 0.1253665
-56     7       10       100      gini 0.1255997
-57     3        5       100      gini 0.1257361
-58     9       15       500      gini 0.1258641
-59     6       10       100      gini 0.1259584
-60    10       15       300      gini 0.1259758
-61     4       10       500      gini 0.1263621
-62     9       15       300      gini 0.1264203
-63    12       15       100      gini 0.1265025
-64     8       15       500      gini 0.1265721
-65     2        5       500      gini 0.1266220
-66     8       15       300      gini 0.1267140
-67     4       10       300      gini 0.1267876
-68    10       15       100      gini 0.1268396
-69    11       15       100      gini 0.1269556
-70     2        5       300      gini 0.1271676
-71     7       15       500      gini 0.1273421
-72     7       15       300      gini 0.1276667
-73     5       10       100      gini 0.1279446
-74    12       20       500      gini 0.1280429
-75     9       15       100      gini 0.1280750
-76    12       20       300      gini 0.1281329
-77     6       15       500      gini 0.1281506
-78    11       20       300      gini 0.1281588
-79     3       10       500      gini 0.1281836
-80    10       20       500      gini 0.1282266
-81    11       20       500      gini 0.1282600
-82     6       15       300      gini 0.1282876
-83     3       10       300      gini 0.1285083
-84     8       15       100      gini 0.1289850
-85     5       15       500      gini 0.1290990
-86     9       20       500      gini 0.1291231
-87     5       15       300      gini 0.1291516
-88    10       20       300      gini 0.1291917
-89     4       10       100      gini 0.1292167
-90     2        5       100      gini 0.1296366
-91     8       20       500      gini 0.1298449
-92     9       20       300      gini 0.1299142
-93     7       15       100      gini 0.1302080
-94     6       15       100      gini 0.1302180
-95     8       20       300      gini 0.1302658
-96    11       20       100      gini 0.1303368
-97    12       20       100      gini 0.1303956
-98     7       20       500      gini 0.1305237
-99     4       15       500      gini 0.1306045
-100    7       20       300      gini 0.1307034
-101    4       15       300      gini 0.1314075
-102    3       10       100      gini 0.1314194
-103   10       20       100      gini 0.1314446
-104    9       20       100      gini 0.1314797
-105    6       20       500      gini 0.1316348
-106    6       20       300      gini 0.1318650
-107    5       15       100      gini 0.1322313
-108    2       10       500      gini 0.1323110
-109    8       20       100      gini 0.1323435
-110    7       20       100      gini 0.1327727
-111    2       10       300      gini 0.1328086
-112    5       20       500      gini 0.1329164
-113    4       15       100      gini 0.1329842
-114    3       15       500      gini 0.1330115
-115    5       20       300      gini 0.1330483
-116    3       15       300      gini 0.1333896
-117    6       20       100      gini 0.1334507
-118    4       20       500      gini 0.1343606
-119    5       20       100      gini 0.1346723
-120    4       20       300      gini 0.1348001
-121    3       15       100      gini 0.1352052
-122    2       10       100      gini 0.1355645
-123    3       20       500      gini 0.1366326
-124    4       20       100      gini 0.1369212
-125    3       20       300      gini 0.1369492
-126    2       15       500      gini 0.1370411
-127    2       15       300      gini 0.1371923
-128    3       20       100      gini 0.1389632
-129    2       15       100      gini 0.1396311
-130    2       20       500      gini 0.1408191
-131    2       20       300      gini 0.1411691
-132    2       20       100      gini 0.1429509
-133    1        5       300      gini 0.1517564
-134    1        5       500      gini 0.1517581
-135    1        5       100      gini 0.1533601
-136    1       10       500      gini 0.1552974
-137    1       10       300      gini 0.1556152
-138    1       10       100      gini 0.1567145
-139    1       15       300      gini 0.1579995
-140    1       15       500      gini 0.1585141
-141    1       20       500      gini 0.1600574
-142    1       20       300      gini 0.1609307
-143    1       15       100      gini 0.1613020
-144    1       20       100      gini 0.1623087</code></pre>
+<pre><code>    mtry nodesize num_trees   mse_oob
+1     12        5       500 0.1161355
+2     11        5       500 0.1167286
+3     10        5       500 0.1167594
+4     11        5       300 0.1168635
+5     10        5       300 0.1170744
+6      9        5       300 0.1172085
+7      9        5       500 0.1172791
+8     12        5       300 0.1173561
+9      8        5       500 0.1175019
+10     8        5       300 0.1181500
+11     7        5       500 0.1182748
+12     6        5       500 0.1184314
+13     7        5       300 0.1187873
+14     6        5       300 0.1194305
+15     5        5       500 0.1195314
+16    11        5       100 0.1195434
+17    12        5       100 0.1198150
+18     9        5       100 0.1198567
+19    10        5       100 0.1201343
+20     4        5       500 0.1206271
+21     7        5       100 0.1206874
+22     5        5       300 0.1206969
+23    12       10       500 0.1208994
+24    11       10       500 0.1210198
+25    11       10       300 0.1211552
+26     8        5       100 0.1211788
+27    12       10       300 0.1212391
+28    10       10       500 0.1213147
+29     4        5       300 0.1214632
+30     9       10       500 0.1217760
+31    10       10       300 0.1220816
+32     9       10       300 0.1222290
+33     6        5       100 0.1222443
+34     8       10       300 0.1222482
+35     8       10       500 0.1225779
+36     7       10       500 0.1226872
+37     3        5       500 0.1227032
+38     5        5       100 0.1230636
+39     3        5       300 0.1230863
+40    11       10       100 0.1232123
+41    12       10       100 0.1234719
+42     4        5       100 0.1234766
+43     7       10       300 0.1236268
+44     6       10       500 0.1236749
+45    10       10       100 0.1238468
+46     6       10       300 0.1241986
+47    12       15       500 0.1243726
+48     8       10       100 0.1245897
+49     5       10       500 0.1248403
+50    11       15       500 0.1248550
+51     9       10       100 0.1248996
+52    11       15       300 0.1250312
+53    12       15       300 0.1251028
+54    10       15       500 0.1252682
+55     5       10       300 0.1253665
+56     7       10       100 0.1255997
+57     3        5       100 0.1257361
+58     9       15       500 0.1258641
+59     6       10       100 0.1259584
+60    10       15       300 0.1259758
+61     4       10       500 0.1263621
+62     9       15       300 0.1264203
+63    12       15       100 0.1265025
+64     8       15       500 0.1265721
+65     2        5       500 0.1266220
+66     8       15       300 0.1267140
+67     4       10       300 0.1267876
+68    10       15       100 0.1268396
+69    11       15       100 0.1269556
+70     2        5       300 0.1271676
+71     7       15       500 0.1273421
+72     7       15       300 0.1276667
+73     5       10       100 0.1279446
+74    12       20       500 0.1280429
+75     9       15       100 0.1280750
+76    12       20       300 0.1281329
+77     6       15       500 0.1281506
+78    11       20       300 0.1281588
+79     3       10       500 0.1281836
+80    10       20       500 0.1282266
+81    11       20       500 0.1282600
+82     6       15       300 0.1282876
+83     3       10       300 0.1285083
+84     8       15       100 0.1289850
+85     5       15       500 0.1290990
+86     9       20       500 0.1291231
+87     5       15       300 0.1291516
+88    10       20       300 0.1291917
+89     4       10       100 0.1292167
+90     2        5       100 0.1296366
+91     8       20       500 0.1298449
+92     9       20       300 0.1299142
+93     7       15       100 0.1302080
+94     6       15       100 0.1302180
+95     8       20       300 0.1302658
+96    11       20       100 0.1303368
+97    12       20       100 0.1303956
+98     7       20       500 0.1305237
+99     4       15       500 0.1306045
+100    7       20       300 0.1307034
+101    4       15       300 0.1314075
+102    3       10       100 0.1314194
+103   10       20       100 0.1314446
+104    9       20       100 0.1314797
+105    6       20       500 0.1316348
+106    6       20       300 0.1318650
+107    5       15       100 0.1322313
+108    2       10       500 0.1323110
+109    8       20       100 0.1323435
+110    7       20       100 0.1327727
+111    2       10       300 0.1328086
+112    5       20       500 0.1329164
+113    4       15       100 0.1329842
+114    3       15       500 0.1330115
+115    5       20       300 0.1330483
+116    3       15       300 0.1333896
+117    6       20       100 0.1334507
+118    4       20       500 0.1343606
+119    5       20       100 0.1346723
+120    4       20       300 0.1348001
+121    3       15       100 0.1352052
+122    2       10       100 0.1355645
+123    3       20       500 0.1366326
+124    4       20       100 0.1369212
+125    3       20       300 0.1369492
+126    2       15       500 0.1370411
+127    2       15       300 0.1371923
+128    3       20       100 0.1389632
+129    2       15       100 0.1396311
+130    2       20       500 0.1408191
+131    2       20       300 0.1411691
+132    2       20       100 0.1429509
+133    1        5       300 0.1517564
+134    1        5       500 0.1517581
+135    1        5       100 0.1533601
+136    1       10       500 0.1552974
+137    1       10       300 0.1556152
+138    1       10       100 0.1567145
+139    1       15       300 0.1579995
+140    1       15       500 0.1585141
+141    1       20       500 0.1600574
+142    1       20       300 0.1609307
+143    1       15       100 0.1613020
+144    1       20       100 0.1623087</code></pre>
 </div>
 </div>
 </section>
@@ -708,29 +705,27 @@ The following object is masked from 'package:purrr':
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">mtry =</span> grid_params<span class="sc">$</span>mtry[.x], </span>
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">nodesize =</span> grid_params<span class="sc">$</span>nodesize[.x], </span>
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">ntree =</span> grid_params<span class="sc">$</span>num_trees[.x],</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">splitrule =</span>  grid_params<span class="sc">$</span>splitrule[.x],</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">keep.inbag =</span> <span class="cn">TRUE</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>      num_trees <span class="ot">&lt;-</span> grid_params<span class="sc">$</span>num_trees[.x]</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Identify out of bag observations in each tree</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>      err_oob <span class="ot">&lt;-</span> rf<span class="sc">$</span>err.rate[num_trees,<span class="dv">1</span>]</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>()</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Return object:</span></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">mtry =</span> grid_params<span class="sc">$</span>mtry[.x], </span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">nodesize =</span> grid_params<span class="sc">$</span>nodesize[.x], </span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">num_trees =</span> grid_params<span class="sc">$</span>num_trees[.x],</span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">splitrule =</span>  grid_params<span class="sc">$</span>splitrule[.x],</span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">err_oob =</span> err_oob</span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">.options =</span> furrr<span class="sc">::</span><span class="fu">furrr_options</span>(<span class="at">seed =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">keep.inbag =</span> <span class="cn">TRUE</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>      num_trees <span class="ot">&lt;-</span> grid_params<span class="sc">$</span>num_trees[.x]</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Identify out of bag observations in each tree</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>      err_oob <span class="ot">&lt;-</span> rf<span class="sc">$</span>err.rate[num_trees,<span class="dv">1</span>]</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">p</span>()</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Return object:</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">mtry =</span> grid_params<span class="sc">$</span>mtry[.x], </span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">nodesize =</span> grid_params<span class="sc">$</span>nodesize[.x], </span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">num_trees =</span> grid_params<span class="sc">$</span>num_trees[.x],</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">err_oob =</span> err_oob</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">.options =</span> furrr<span class="sc">::</span><span class="fu">furrr_options</span>(<span class="at">seed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let us order the computed out-of-bag error rate by ascending values:</p>
 <div class="cell">
@@ -749,151 +744,151 @@ The following object is masked from 'package:purrr':
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>best_params_rf_classif</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    mtry nodesize num_trees splitrule   err_oob
-1     12        5       300      gini 0.1567209
-2     11        5       500      gini 0.1580126
-3     10        5       500      gini 0.1580556
-4      9        5       300      gini 0.1585723
-5     10        5       300      gini 0.1586584
-6     11        5       300      gini 0.1591751
-7      9        5       500      gini 0.1595195
-8     12        5       500      gini 0.1596056
-9      7        5       500      gini 0.1596917
-10     8        5       500      gini 0.1600792
-11     6        5       300      gini 0.1614570
-12     6        5       500      gini 0.1621459
-13     8        5       300      gini 0.1627056
-14    12        5       100      gini 0.1631361
-15     7        5       300      gini 0.1634375
-16     5        5       500      gini 0.1643417
-17    10        5       100      gini 0.1652458
-18     9        5       100      gini 0.1653320
-19    11       10       300      gini 0.1661069
-20     5        5       300      gini 0.1664944
-21     6        5       100      gini 0.1665375
-22     4        5       500      gini 0.1666236
-23    12       10       500      gini 0.1672264
-24    11        5       100      gini 0.1673125
-25     4        5       300      gini 0.1673555
-26    10       10       500      gini 0.1677000
-27     7        5       100      gini 0.1677430
-28    11       10       500      gini 0.1677861
-29    12       10       300      gini 0.1682167
-30     8        5       100      gini 0.1685180
-31     9       10       300      gini 0.1692930
-32     8       10       500      gini 0.1692930
-33     9       10       500      gini 0.1693791
-34     3        5       500      gini 0.1698958
-35     5        5       100      gini 0.1706708
-36     8       10       300      gini 0.1712736
-37     3        5       300      gini 0.1715319
-38    10       10       300      gini 0.1717902
-39     7       10       500      gini 0.1721777
-40     7       10       300      gini 0.1730388
-41    11       10       100      gini 0.1731680
-42     6       10       300      gini 0.1731680
-43     6       10       500      gini 0.1732972
-44    12       10       100      gini 0.1736416
-45     4        5       100      gini 0.1742444
-46    10       10       100      gini 0.1749333
-47    11       15       500      gini 0.1754930
-48    11       15       300      gini 0.1758805
-49    12       15       300      gini 0.1760958
-50     9       15       500      gini 0.1762249
-51    10       15       500      gini 0.1762680
-52     9       10       100      gini 0.1763110
-53    12       15       500      gini 0.1763541
-54     8       10       100      gini 0.1766124
-55     5       10       500      gini 0.1766555
-56     5       10       300      gini 0.1770860
-57    10       15       300      gini 0.1772152
-58     2        5       500      gini 0.1777749
-59     3        5       100      gini 0.1778180
-60     4       10       500      gini 0.1778180
-61     7       10       100      gini 0.1779041
-62     6       10       100      gini 0.1781624
-63     9       15       300      gini 0.1785499
-64     2        5       300      gini 0.1794110
-65     8       15       300      gini 0.1799707
-66     8       15       500      gini 0.1800138
-67     7       15       500      gini 0.1801429
-68     4       10       300      gini 0.1804443
-69     7       15       300      gini 0.1809610
-70    12       15       100      gini 0.1820804
-71    12       20       500      gini 0.1821235
-72     5       10       100      gini 0.1822957
-73    11       15       100      gini 0.1823818
-74     4       10       100      gini 0.1826401
-75    10       15       100      gini 0.1827693
-76     6       15       300      gini 0.1829846
-77     3       10       500      gini 0.1831568
-78     2        5       100      gini 0.1833290
-79    12       20       300      gini 0.1835443
-80    11       20       300      gini 0.1835874
-81     6       15       500      gini 0.1838887
-82    11       20       500      gini 0.1838887
-83     5       15       500      gini 0.1840610
-84     8       15       100      gini 0.1841471
-85     9       20       300      gini 0.1843193
-86     7       15       100      gini 0.1844054
-87     9       20       500      gini 0.1844915
-88     3       10       300      gini 0.1850512
-89    10       20       300      gini 0.1851373
-90     9       15       100      gini 0.1852665
-91    10       20       500      gini 0.1855679
-92     4       15       500      gini 0.1862998
-93    12       20       100      gini 0.1864721
-94     8       20       500      gini 0.1865582
-95    11       20       100      gini 0.1867304
-96     8       20       300      gini 0.1873332
-97     5       15       300      gini 0.1876345
-98     6       15       100      gini 0.1877637
-99     7       20       500      gini 0.1881512
-100    7       20       300      gini 0.1883665
-101    9       20       100      gini 0.1884095
-102    3       10       100      gini 0.1885818
-103    2       10       500      gini 0.1897443
-104    4       15       300      gini 0.1900887
-105   10       20       100      gini 0.1901317
-106    8       20       100      gini 0.1905192
-107    6       20       500      gini 0.1905192
-108    5       15       100      gini 0.1906484
-109    4       15       100      gini 0.1915095
-110    7       20       100      gini 0.1919401
-111    6       20       300      gini 0.1921553
-112    3       15       500      gini 0.1928012
-113    2       10       300      gini 0.1929303
-114    3       15       300      gini 0.1930164
-115    5       20       500      gini 0.1933178
-116    5       20       300      gini 0.1940067
-117    6       20       100      gini 0.1955136
-118    4       20       500      gini 0.1959442
-119    3       15       100      gini 0.1970206
-120    4       20       300      gini 0.1973650
-121    2       10       100      gini 0.1974942
-122    5       20       100      gini 0.1983983
-123    4       20       100      gini 0.1990011
-124    2       15       300      gini 0.2003789
-125    3       20       500      gini 0.2010678
-126    2       15       500      gini 0.2013692
-127    3       20       300      gini 0.2017567
-128    3       20       100      gini 0.2037802
-129    2       15       100      gini 0.2047275
-130    2       20       300      gini 0.2083441
-131    2       20       500      gini 0.2083441
-132    2       20       100      gini 0.2106260
-133    1        5       500      gini 0.2295703
-134    1        5       100      gini 0.2300870
-135    1        5       300      gini 0.2349092
-136    1       10       300      gini 0.2349522
-137    1       10       500      gini 0.2386980
-138    1       10       100      gini 0.2398174
-139    1       15       300      gini 0.2410230
-140    1       15       500      gini 0.2412813
-141    1       15       100      gini 0.2456730
-142    1       20       500      gini 0.2462757
-143    1       20       100      gini 0.2473952
-144    1       20       300      gini 0.2490743</code></pre>
+<pre><code>    mtry nodesize num_trees   err_oob
+1     12        5       300 0.1567209
+2     11        5       500 0.1580126
+3     10        5       500 0.1580556
+4      9        5       300 0.1585723
+5     10        5       300 0.1586584
+6     11        5       300 0.1591751
+7      9        5       500 0.1595195
+8     12        5       500 0.1596056
+9      7        5       500 0.1596917
+10     8        5       500 0.1600792
+11     6        5       300 0.1614570
+12     6        5       500 0.1621459
+13     8        5       300 0.1627056
+14    12        5       100 0.1631361
+15     7        5       300 0.1634375
+16     5        5       500 0.1643417
+17    10        5       100 0.1652458
+18     9        5       100 0.1653320
+19    11       10       300 0.1661069
+20     5        5       300 0.1664944
+21     6        5       100 0.1665375
+22     4        5       500 0.1666236
+23    12       10       500 0.1672264
+24    11        5       100 0.1673125
+25     4        5       300 0.1673555
+26    10       10       500 0.1677000
+27     7        5       100 0.1677430
+28    11       10       500 0.1677861
+29    12       10       300 0.1682167
+30     8        5       100 0.1685180
+31     9       10       300 0.1692930
+32     8       10       500 0.1692930
+33     9       10       500 0.1693791
+34     3        5       500 0.1698958
+35     5        5       100 0.1706708
+36     8       10       300 0.1712736
+37     3        5       300 0.1715319
+38    10       10       300 0.1717902
+39     7       10       500 0.1721777
+40     7       10       300 0.1730388
+41    11       10       100 0.1731680
+42     6       10       300 0.1731680
+43     6       10       500 0.1732972
+44    12       10       100 0.1736416
+45     4        5       100 0.1742444
+46    10       10       100 0.1749333
+47    11       15       500 0.1754930
+48    11       15       300 0.1758805
+49    12       15       300 0.1760958
+50     9       15       500 0.1762249
+51    10       15       500 0.1762680
+52     9       10       100 0.1763110
+53    12       15       500 0.1763541
+54     8       10       100 0.1766124
+55     5       10       500 0.1766555
+56     5       10       300 0.1770860
+57    10       15       300 0.1772152
+58     2        5       500 0.1777749
+59     3        5       100 0.1778180
+60     4       10       500 0.1778180
+61     7       10       100 0.1779041
+62     6       10       100 0.1781624
+63     9       15       300 0.1785499
+64     2        5       300 0.1794110
+65     8       15       300 0.1799707
+66     8       15       500 0.1800138
+67     7       15       500 0.1801429
+68     4       10       300 0.1804443
+69     7       15       300 0.1809610
+70    12       15       100 0.1820804
+71    12       20       500 0.1821235
+72     5       10       100 0.1822957
+73    11       15       100 0.1823818
+74     4       10       100 0.1826401
+75    10       15       100 0.1827693
+76     6       15       300 0.1829846
+77     3       10       500 0.1831568
+78     2        5       100 0.1833290
+79    12       20       300 0.1835443
+80    11       20       300 0.1835874
+81     6       15       500 0.1838887
+82    11       20       500 0.1838887
+83     5       15       500 0.1840610
+84     8       15       100 0.1841471
+85     9       20       300 0.1843193
+86     7       15       100 0.1844054
+87     9       20       500 0.1844915
+88     3       10       300 0.1850512
+89    10       20       300 0.1851373
+90     9       15       100 0.1852665
+91    10       20       500 0.1855679
+92     4       15       500 0.1862998
+93    12       20       100 0.1864721
+94     8       20       500 0.1865582
+95    11       20       100 0.1867304
+96     8       20       300 0.1873332
+97     5       15       300 0.1876345
+98     6       15       100 0.1877637
+99     7       20       500 0.1881512
+100    7       20       300 0.1883665
+101    9       20       100 0.1884095
+102    3       10       100 0.1885818
+103    2       10       500 0.1897443
+104    4       15       300 0.1900887
+105   10       20       100 0.1901317
+106    8       20       100 0.1905192
+107    6       20       500 0.1905192
+108    5       15       100 0.1906484
+109    4       15       100 0.1915095
+110    7       20       100 0.1919401
+111    6       20       300 0.1921553
+112    3       15       500 0.1928012
+113    2       10       300 0.1929303
+114    3       15       300 0.1930164
+115    5       20       500 0.1933178
+116    5       20       300 0.1940067
+117    6       20       100 0.1955136
+118    4       20       500 0.1959442
+119    3       15       100 0.1970206
+120    4       20       300 0.1973650
+121    2       10       100 0.1974942
+122    5       20       100 0.1983983
+123    4       20       100 0.1990011
+124    2       15       300 0.2003789
+125    3       20       500 0.2010678
+126    2       15       500 0.2013692
+127    3       20       300 0.2017567
+128    3       20       100 0.2037802
+129    2       15       100 0.2047275
+130    2       20       300 0.2083441
+131    2       20       500 0.2083441
+132    2       20       100 0.2106260
+133    1        5       500 0.2295703
+134    1        5       100 0.2300870
+135    1        5       300 0.2349092
+136    1       10       300 0.2349522
+137    1       10       500 0.2386980
+138    1       10       100 0.2398174
+139    1       15       300 0.2410230
+140    1       15       500 0.2412813
+141    1       15       100 0.2456730
+142    1       20       500 0.2462757
+143    1       20       100 0.2473952
+144    1       20       300 0.2490743</code></pre>
 </div>
 </div>
 

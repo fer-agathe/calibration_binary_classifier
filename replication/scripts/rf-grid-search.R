@@ -63,16 +63,14 @@ if (quick_example) {
     expand_grid(
       num_trees = c(100),
       mtry = c(4, 8),
-      nodesize = c(5, 10),
-      splitrule = "gini"
+      nodesize = c(5, 10)
     )
 } else {
   grid_params <-
     expand_grid(
       num_trees = c(100,300, 500),
       mtry = seq(1,(ncol(tb_train)/2)),
-      nodesize = c(5, 10, 15, 20),
-      splitrule = "gini"
+      nodesize = c(5, 10, 15, 20)
     )
 }
 
@@ -94,8 +92,7 @@ progressr::with_progress({
         data = tb_train,
         mtry = grid_params$mtry[.x],
         nodesize = grid_params$nodesize[.x],
-        ntree = grid_params$num_trees[.x],
-        splitrule =  grid_params$splitrule[.x],
+        ntree = grid_params$num_trees[.x]
         keep.inbag = TRUE
       )
 
@@ -118,8 +115,7 @@ progressr::with_progress({
       tibble(
         mtry = grid_params$mtry[.x],
         nodesize = grid_params$nodesize[.x],
-        num_trees = grid_params$num_trees[.x],
-        splitrule =  grid_params$splitrule[.x],
+        num_trees = grid_params$num_trees[.x]
         mse_oob = mse_oob
       )
     },
@@ -151,7 +147,6 @@ progressr::with_progress({
         mtry = grid_params$mtry[.x],
         nodesize = grid_params$nodesize[.x],
         ntree = grid_params$num_trees[.x],
-        splitrule =  grid_params$splitrule[.x],
         keep.inbag = TRUE
       )
 
@@ -167,7 +162,6 @@ progressr::with_progress({
         mtry = grid_params$mtry[.x],
         nodesize = grid_params$nodesize[.x],
         num_trees = grid_params$num_trees[.x],
-        splitrule =  grid_params$splitrule[.x],
         err_oob = err_oob
       )
     },

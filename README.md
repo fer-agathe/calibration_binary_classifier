@@ -1,4 +1,4 @@
-This repository contains the R codes to replicate the results of the article titled _From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration__.
+This repository contains the R codes to replicate the results of the article titled _From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration_.
 
 The replication codes can be found in the `replication` folder.
 
