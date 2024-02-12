@@ -1,8 +1,8 @@
 This repository contains the R codes to replicate the results of the article titled _From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration__.
 
-The replication codes can be found in the `replication` folder. The `ebook` folder contains an ebook with explanations of these codes (the HTML version of that ebook is available at the following URL: ).
+The replication codes can be found in the `replication` folder.
 
-The replication book is avilable at the following address: <https://fer-agathe.github.io/calibration_binary_classifier>.
+The `docs` folder contains an ebook with explanations of these codes. The HTML version of the ebook can be viewed at the following address: <https://fer-agathe.github.io/calibration_binary_classifier>.
 
 # Replication Codes
 
