@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration",
     "section": "",
-    "text": "Introduction\nThis ebook is the online supplementary materials for the article titled “From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration.” In this ebook, we are interested in the calibration of a binary classifier for which the scores returned by the model should be interpreted as probabilities.\nThe codes are written in R. This notebook explains them. You can download the scripts on the following github repository:\nGithub Repository\nThis ebook is structured into three main parts"
+    "text": "Introduction\nThis ebook is the online supplementary materials for the article titled “From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration.”. The preprint is available on arXiv: https://arxiv.org/abs/2402.07790.\nIn this ebook, we are interested in the calibration of a binary classifier for which the scores returned by the model should be interpreted as probabilities.\nThe codes are written in R. This notebook explains them. You can download the scripts on the following github repository:\nGithub Repository\nThis ebook is structured into three main parts"
   },
   {
     "objectID": "index.html#part-1-synthetic-data-and-calibration-metrics",
