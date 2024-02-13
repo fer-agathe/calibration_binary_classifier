@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.361">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -120,7 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -149,6 +121,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 	});
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -157,11 +130,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rf-single.html">Machine Learning and Calibration</a></li><li class="breadcrumb-item"><a href="./rf-calibration.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -169,136 +147,150 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Introduction</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Calibration and Recalibration</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Calibration and Recalibration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./calibration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></a>
+  <a href="./calibration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./recalibration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Recalibration</span></a>
+  <a href="./recalibration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Recalibration</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Machine Learning and Calibration</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Machine Learning and Calibration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-single.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(Re)Calibration of a Random Forest</span></a>
+  <a href="./rf-single.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(Re)Calibration of a Random Forest</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-calibration.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></a>
+  <a href="./rf-calibration.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-recalibration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></a>
+  <a href="./rf-recalibration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Real-world Data</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Real-world Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-grid-search.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Grid Search</span></a>
+  <a href="./rf-grid-search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Grid Search</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></a>
+  <a href="./rf-simulations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-simul-metrics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation Metrics and Viz</span></a>
+  <a href="./rf-simul-metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation Metrics and Viz</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-ml-recalib-dgp" id="toc-sec-ml-recalib-dgp" class="nav-link active" data-scroll-target="#sec-ml-recalib-dgp"><span class="toc-section-number">4.1</span>  Data Generating Process</a></li>
-  <li><a href="#splitting-the-dataset" id="toc-splitting-the-dataset" class="nav-link" data-scroll-target="#splitting-the-dataset"><span class="toc-section-number">4.2</span>  Splitting the dataset</a></li>
-  <li><a href="#sec-rf-calib-regression" id="toc-sec-rf-calib-regression" class="nav-link" data-scroll-target="#sec-rf-calib-regression"><span class="toc-section-number">4.3</span>  Simulations: Regression Task</a>
+  <li><a href="#sec-ml-recalib-dgp" id="toc-sec-ml-recalib-dgp" class="nav-link active" data-scroll-target="#sec-ml-recalib-dgp"><span class="header-section-number">4.1</span> Data Generating Process</a></li>
+  <li><a href="#splitting-the-dataset" id="toc-splitting-the-dataset" class="nav-link" data-scroll-target="#splitting-the-dataset"><span class="header-section-number">4.2</span> Splitting the dataset</a></li>
+  <li><a href="#sec-rf-calib-regression" id="toc-sec-rf-calib-regression" class="nav-link" data-scroll-target="#sec-rf-calib-regression"><span class="header-section-number">4.3</span> Simulations: Regression Task</a>
   <ul class="collapse">
-  <li><a href="#probability-distributions" id="toc-probability-distributions" class="nav-link" data-scroll-target="#probability-distributions"><span class="toc-section-number">4.3.1</span>  Probability distributions</a></li>
+  <li><a href="#probability-distributions" id="toc-probability-distributions" class="nav-link" data-scroll-target="#probability-distributions"><span class="header-section-number">4.3.1</span> Probability distributions</a></li>
   </ul></li>
-  <li><a href="#sec-rf-calib-classification" id="toc-sec-rf-calib-classification" class="nav-link" data-scroll-target="#sec-rf-calib-classification"><span class="toc-section-number">4.4</span>  Simulations: Classification Task</a>
+  <li><a href="#sec-rf-calib-classification" id="toc-sec-rf-calib-classification" class="nav-link" data-scroll-target="#sec-rf-calib-classification"><span class="header-section-number">4.4</span> Simulations: Classification Task</a>
   <ul class="collapse">
-  <li><a href="#probability-distributions-1" id="toc-probability-distributions-1" class="nav-link" data-scroll-target="#probability-distributions-1"><span class="toc-section-number">4.4.1</span>  Probability distributions</a></li>
+  <li><a href="#probability-distributions-1" id="toc-probability-distributions-1" class="nav-link" data-scroll-target="#probability-distributions-1"><span class="header-section-number">4.4.1</span> Probability distributions</a></li>
   </ul></li>
-  <li><a href="#sec-rf-gof-metrics" id="toc-sec-rf-gof-metrics" class="nav-link" data-scroll-target="#sec-rf-gof-metrics"><span class="toc-section-number">4.5</span>  Standard Metrics</a>
+  <li><a href="#sec-rf-gof-metrics" id="toc-sec-rf-gof-metrics" class="nav-link" data-scroll-target="#sec-rf-gof-metrics"><span class="header-section-number">4.5</span> Standard Metrics</a>
   <ul class="collapse">
-  <li><a href="#sec-rf-gof-metrics-functions" id="toc-sec-rf-gof-metrics-functions" class="nav-link" data-scroll-target="#sec-rf-gof-metrics-functions"><span class="toc-section-number">4.5.1</span>  Helper Functions</a></li>
-  <li><a href="#calculating-the-standard-metrics" id="toc-calculating-the-standard-metrics" class="nav-link" data-scroll-target="#calculating-the-standard-metrics"><span class="toc-section-number">4.5.2</span>  Calculating the Standard Metrics</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="toc-section-number">4.5.3</span>  Results</a></li>
+  <li><a href="#sec-rf-gof-metrics-functions" id="toc-sec-rf-gof-metrics-functions" class="nav-link" data-scroll-target="#sec-rf-gof-metrics-functions"><span class="header-section-number">4.5.1</span> Helper Functions</a></li>
+  <li><a href="#calculating-the-standard-metrics" id="toc-calculating-the-standard-metrics" class="nav-link" data-scroll-target="#calculating-the-standard-metrics"><span class="header-section-number">4.5.2</span> Calculating the Standard Metrics</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4.5.3</span> Results</a></li>
   </ul></li>
-  <li><a href="#sec-rf-calib-metrics" id="toc-sec-rf-calib-metrics" class="nav-link" data-scroll-target="#sec-rf-calib-metrics"><span class="toc-section-number">4.6</span>  Calibration Metrics</a>
+  <li><a href="#sec-rf-calib-metrics" id="toc-sec-rf-calib-metrics" class="nav-link" data-scroll-target="#sec-rf-calib-metrics"><span class="header-section-number">4.6</span> Calibration Metrics</a>
   <ul class="collapse">
-  <li><a href="#sec-calib-rf-metrics-functions" id="toc-sec-calib-rf-metrics-functions" class="nav-link" data-scroll-target="#sec-calib-rf-metrics-functions"><span class="toc-section-number">4.6.1</span>  Helper Functions</a></li>
-  <li><a href="#calculating-the-metrics" id="toc-calculating-the-metrics" class="nav-link" data-scroll-target="#calculating-the-metrics"><span class="toc-section-number">4.6.2</span>  Calculating the Metrics</a></li>
-  <li><a href="#results-1" id="toc-results-1" class="nav-link" data-scroll-target="#results-1"><span class="toc-section-number">4.6.3</span>  Results</a></li>
+  <li><a href="#sec-calib-rf-metrics-functions" id="toc-sec-calib-rf-metrics-functions" class="nav-link" data-scroll-target="#sec-calib-rf-metrics-functions"><span class="header-section-number">4.6.1</span> Helper Functions</a></li>
+  <li><a href="#calculating-the-metrics" id="toc-calculating-the-metrics" class="nav-link" data-scroll-target="#calculating-the-metrics"><span class="header-section-number">4.6.2</span> Calculating the Metrics</a></li>
+  <li><a href="#results-1" id="toc-results-1" class="nav-link" data-scroll-target="#results-1"><span class="header-section-number">4.6.3</span> Results</a></li>
   </ul></li>
-  <li><a href="#sec-rf-calib-viz" id="toc-sec-rf-calib-viz" class="nav-link" data-scroll-target="#sec-rf-calib-viz"><span class="toc-section-number">4.7</span>  Calibration Visualizations</a>
+  <li><a href="#sec-rf-calib-viz" id="toc-sec-rf-calib-viz" class="nav-link" data-scroll-target="#sec-rf-calib-viz"><span class="header-section-number">4.7</span> Calibration Visualizations</a>
   <ul class="collapse">
-  <li><a href="#sec-calib-rf-viz-functions" id="toc-sec-calib-rf-viz-functions" class="nav-link" data-scroll-target="#sec-calib-rf-viz-functions"><span class="toc-section-number">4.7.1</span>  Helper Functions</a></li>
-  <li><a href="#quantile-based-bins" id="toc-quantile-based-bins" class="nav-link" data-scroll-target="#quantile-based-bins"><span class="toc-section-number">4.7.2</span>  Quantile-based Bins</a></li>
-  <li><a href="#local-regression" id="toc-local-regression" class="nav-link" data-scroll-target="#local-regression"><span class="toc-section-number">4.7.3</span>  Local Regression</a></li>
-  <li><a href="#moving-average" id="toc-moving-average" class="nav-link" data-scroll-target="#moving-average"><span class="toc-section-number">4.7.4</span>  Moving Average</a></li>
+  <li><a href="#sec-calib-rf-viz-functions" id="toc-sec-calib-rf-viz-functions" class="nav-link" data-scroll-target="#sec-calib-rf-viz-functions"><span class="header-section-number">4.7.1</span> Helper Functions</a></li>
+  <li><a href="#quantile-based-bins" id="toc-quantile-based-bins" class="nav-link" data-scroll-target="#quantile-based-bins"><span class="header-section-number">4.7.2</span> Quantile-based Bins</a></li>
+  <li><a href="#local-regression" id="toc-local-regression" class="nav-link" data-scroll-target="#local-regression"><span class="header-section-number">4.7.3</span> Local Regression</a></li>
+  <li><a href="#moving-average" id="toc-moving-average" class="nav-link" data-scroll-target="#moving-average"><span class="header-section-number">4.7.4</span> Moving Average</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -308,7 +300,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-ml-and-calibration" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></span></h1>
+<h1 class="title"><span id="sec-ml-and-calibration" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></span></h1>
 </div>
 
 
@@ -323,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In this chapter, we measure the calibration metrics defined in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a> on a Random Forest classifier trained on simulated data. Subsequently, we explore the different recalibration methods presented in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a> to recalibrate the predicted scores obtained from the Random Forest. Thus, we no longer work with the transformed probabilities <span class="math inline">\(p_u\)</span> but directly with the predicted scores obtained from the Random Forest <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span>. To avoid overfitting, the data will be split into training (used to train the random forest), calibration (to recalibrate the scores) and test sets (to assess the performances on unseen data).</p>
+<p>In this chapter, we measure the calibration metrics defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a> on a Random Forest classifier trained on simulated data. Subsequently, we explore the different recalibration methods presented in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a> to recalibrate the predicted scores obtained from the Random Forest. Thus, we no longer work with the transformed probabilities <span class="math inline">\(p_u\)</span> but directly with the predicted scores obtained from the Random Forest <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span>. To avoid overfitting, the data will be split into training (used to train the random forest), calibration (to recalibrate the scores) and test sets (to assess the performances on unseen data).</p>
 <div class="cell">
 <details>
 <summary>Display the definitions of colors.</summary>
@@ -331,11 +323,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.3     ✔ readr     2.1.4
+✔ dplyr     1.1.4     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.1     
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -355,7 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="sec-ml-recalib-dgp" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="sec-ml-recalib-dgp"><span class="header-section-number">4.1</span> Data Generating Process</h2>
-<p>We use the same DGP as that presented in <a href="#sec-dgp"><span class="quarto-unresolved-ref">sec-dgp</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>. However, here, we only need the observed events <span class="math inline">\(d\)</span> and the different features <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span>. Let us redefine here the function which simulates a single dataset:</p>
+<p>We use the same DGP as that presented in <a href="calibration.html#sec-dgp"><span>Section&nbsp;1.1</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>. However, here, we only need the observed events <span class="math inline">\(d\)</span> and the different features <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span> and <span class="math inline">\(x_4\)</span>. Let us redefine here the function which simulates a single dataset:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Simulates data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -396,9 +388,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="splitting-the-dataset" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="splitting-the-dataset"><span class="header-section-number">4.2</span> Splitting the dataset</h2>
-<p>The process applied in this chapter is divided into two parts: 1. training the Random Forest classifier to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> 2. calculating the different calibration metrics presented in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a></p>
+<p>The process applied in this chapter is divided into two parts: 1. training the Random Forest classifier to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> 2. calculating the different calibration metrics presented in <a href="calibration.html">Chapter&nbsp;<span>1</span></a></p>
 <p>We split the dataset into three parts: 1. a train set: to train the Random Forest classifier, 2. a calibration set: to train the recalibrator, 3. a test set: on which we will compute the calibration metrics.</p>
-<p>To split the data, we modify the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a> to obtain three different sets instead of two:</p>
+<p>To split the data, we modify the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="calibration.html">Chapter&nbsp;<span>1</span></a> to obtain three different sets instead of two:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get calibration/test samples from the DGP</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -455,17 +447,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="sec-rf-calib-regression" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="sec-rf-calib-regression"><span class="header-section-number">4.3</span> Simulations: Regression Task</h2>
 <p>Let us define a function to train the Random Forest and predict it on a new dataset in order to estimate our binary outcome variable <span class="math inline">\(D\)</span> (and so, <span class="math inline">\(P(D=1)\)</span>) using the different features <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, <span class="math inline">\(X_3\)</span> and <span class="math inline">\(X_4\)</span>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Using a Random Forest regressor for classification task provides actual probability scores whereas a Random Forest classifier yields, for one observation, the average predicted classes across the ensemble of trees (see <a href="#sec-rf-calib-aggregating"><span class="quarto-unresolved-ref">sec-rf-calib-aggregating</span></a>).</p>
+<p>Using a Random Forest regressor for classification task provides actual probability scores whereas a Random Forest classifier yields, for one observation, the average predicted classes across the ensemble of trees (see <a href="rf-single.html#sec-rf-calib-aggregating"><span>Section&nbsp;3.3</span></a>).</p>
 </div>
 </div>
 <div class="cell">
@@ -546,12 +538,9 @@ Note
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We save the results for later use (in <a href="#sec-ml-and-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-recalibration</span></a>).</p>
+<p>We save the results for later use (in <a href="rf-recalibration.html">Chapter&nbsp;<span>5</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(scores_simul_rf, <span class="at">file =</span> <span class="st">"output/simulations/scores_simul_rf.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-
 </div>
 <section id="probability-distributions" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="probability-distributions"><span class="header-section-number">4.3.1</span> Probability distributions</h3>
@@ -605,7 +594,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-boxplot-distribution-single-rf-regressor" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.1: Distribution of true probabilities and scores predicted by the Random Forest regressor for one replication</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.1: Distribution of true probabilities and scores predicted by the Random Forest regressor for one replication</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-boxplot-distribution-single-rf-regressor-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
@@ -679,7 +668,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-curve-distribution-single-rf-regressor" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.2: Scores predicted by the Random Forest regressor according to the true probabilities for one replication. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.2: Scores predicted by the Random Forest regressor according to the true probabilities for one replication. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-curve-distribution-single-rf-regressor-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -750,12 +739,6 @@ Note
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>dist_rf_simuls <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(dist_rf_simuls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 <p>First, let us turn the <code>sample</code> column of the results as a factor.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dist_rf_simuls <span class="ot">&lt;-</span> </span>
@@ -795,7 +778,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-boxplot-distribution-all-rf-regressor" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.3: Distribution of true probabilities and scores predicted by the Random Forest regressor using all replications</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.3: Distribution of true probabilities and scores predicted by the Random Forest regressor using all replications</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-boxplot-distribution-all-rf-regressor-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
@@ -851,7 +834,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-curve-distribution-all-rf-regressor" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.4: Scores predicted by the Random Forest regressor according to the true probabilities for all replications. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.4: Scores predicted by the Random Forest regressor according to the true probabilities for all replications. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-curve-distribution-all-rf-regressor-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -941,12 +924,9 @@ Note
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We save the results for later use (in <a href="#sec-ml-and-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-ml-and-recalibration</span></a>).</p>
+<p>We save the results for later use (in <a href="rf-recalibration.html">Chapter&nbsp;<span>5</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(scores_simul_rf_vote, <span class="at">file =</span> <span class="st">"output/simulations/scores_simul_rf_vote.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-
 </div>
 <section id="probability-distributions-1" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="probability-distributions-1"><span class="header-section-number">4.4.1</span> Probability distributions</h3>
@@ -996,7 +976,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-boxplot-distribution-single-rf-classifier" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.5: Distribution of true probabilities and scores predicted by the Random Forest classifier for one replication</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.5: Distribution of true probabilities and scores predicted by the Random Forest classifier for one replication</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-boxplot-distribution-single-rf-classifier-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
@@ -1046,13 +1026,13 @@ Note
 <div class="cell-output-display">
 <div id="fig-curve-distribution-single-rf-classifier" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.6: Scores predicted by the Random Forest classifier according to the true probabilities for one replication. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.6: Scores predicted by the Random Forest classifier according to the true probabilities for one replication. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-curve-distribution-single-rf-classifier-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Now, we can look at these distributions on all replications by applying the function <code class="sourceCode r"><span class="fu">calib_dist_rf</span>()</code>, defined in the section <a href="#sec-rf-calib-regression"><span class="quarto-unresolved-ref">sec-rf-calib-regression</span></a>:</p>
+<p>Now, we can look at these distributions on all replications by applying the function <code class="sourceCode r"><span class="fu">calib_dist_rf</span>()</code>, defined in the section <a href="#sec-rf-calib-regression"><span>Section&nbsp;4.3</span></a>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(future)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>nb_cores <span class="ot">&lt;-</span> future<span class="sc">::</span><span class="fu">availableCores</span>()<span class="sc">-</span><span class="dv">1</span></span>
@@ -1070,12 +1050,6 @@ Note
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>dist_rf_simuls_vote <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(dist_rf_simuls_vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
 </div>
 <p>First, let us turn the <code>sample</code> column of the results as a factor.</p>
 <div class="cell">
@@ -1116,7 +1090,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-boxplot-distribution-all-rf-classifier" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.7: Distribution of true probabilities and scores predicted by the Random Forest classifier for all replications</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.7: Distribution of true probabilities and scores predicted by the Random Forest classifier for all replications</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-boxplot-distribution-all-rf-classifier-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
@@ -1170,7 +1144,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-curve-distribution-all-rf-classifier" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.8: Scores predicted by the Random Forest classifier according to the true probabilities for all replications. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.8: Scores predicted by the Random Forest classifier according to the true probabilities for all replications. The horizontal grey bars define the quantiles at 5% of predicted probabilities. The vertical grey bars define the quantiles at 5% of true probabilities.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-curve-distribution-all-rf-classifier-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -1180,10 +1154,10 @@ Note
 </section>
 <section id="sec-rf-gof-metrics" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="sec-rf-gof-metrics"><span class="header-section-number">4.5</span> Standard Metrics</h2>
-<p>Let us have a look at the goodness of fit of the random forests obtained in both cases (regression or classification). To do so, we compute the standard performance metrics defined in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>Let us have a look at the goodness of fit of the random forests obtained in both cases (regression or classification). To do so, we compute the standard performance metrics defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <section id="sec-rf-gof-metrics-functions" class="level3" data-number="4.5.1">
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="sec-rf-gof-metrics-functions"><span class="header-section-number">4.5.1</span> Helper Functions</h3>
-<p>We (re)define a helper function to compute standard metrics (see <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>):</p>
+<p>We (re)define a helper function to compute standard metrics (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -1243,7 +1217,7 @@ Note
 <span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on predicted scores of one replication (see <a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>):</p>
+<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on predicted scores of one replication (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics for a replication</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -1309,7 +1283,7 @@ Note
 </section>
 <section id="calculating-the-standard-metrics" class="level3" data-number="4.5.2">
 <h3 data-number="4.5.2" class="anchored" data-anchor-id="calculating-the-standard-metrics"><span class="header-section-number">4.5.2</span> Calculating the Standard Metrics</h3>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Classification</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
@@ -1336,12 +1310,6 @@ Note
 <span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>regression_metrics <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(regression_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Let us apply this function to the different simulations obtained with a Random Forest classifier:</p>
@@ -1367,19 +1335,13 @@ Note
 <span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>classification_metrics <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(classification_metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 </div>
 </div>
 </section>
 <section id="results" class="level3" data-number="4.5.3">
 <h3 data-number="4.5.3" class="anchored" data-anchor-id="results"><span class="header-section-number">4.5.3</span> Results</h3>
-<p>Let us visualize how the performance metrics vary from one replication to another, on the test set. The boxplots are shown in <a href="#fig-metrics-gof-rf-regression">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-gof-rf-regression</span></a> (regression) and in <a href="#fig-metrics-gof-rf-classification">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-gof-rf-classification</span></a> (classification).</p>
+<p>Let us visualize how the performance metrics vary from one replication to another, on the test set. The boxplots are shown in <a href="#fig-metrics-gof-rf-regression">Figure&nbsp;<span>4.9</span></a> (regression) and in <a href="#fig-metrics-gof-rf-classification">Figure&nbsp;<span>4.10</span></a> (classification).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Boxplots for the simulations to visualize the distribution of some </span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' traditional metrics as a function of the probability threshold.</span></span>
@@ -1449,7 +1411,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-metrics-gof-rf-regression" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.9: Standard metrics on Random Forest predicted scores (regression).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.9: Standard metrics on Random Forest predicted scores (regression).</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-metrics-gof-rf-regression-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -1467,7 +1429,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-metrics-gof-rf-classification" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.10: Standard metrics on Random Forest predicted scores (classification).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.10: Standard metrics on Random Forest predicted scores (classification).</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-metrics-gof-rf-classification-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -1478,10 +1440,10 @@ Note
 </section>
 <section id="sec-rf-calib-metrics" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="sec-rf-calib-metrics"><span class="header-section-number">4.6</span> Calibration Metrics</h2>
-<p>Let us have a look at the calibration of the random forests obtained in both cases (regression or classification). To do so, we compute the calibration metrics defined in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>Let us have a look at the calibration of the random forests obtained in both cases (regression or classification). To do so, we compute the calibration metrics defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <section id="sec-calib-rf-metrics-functions" class="level3" data-number="4.6.1">
 <h3 data-number="4.6.1" class="anchored" data-anchor-id="sec-calib-rf-metrics-functions"><span class="header-section-number">4.6.1</span> Helper Functions</h3>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Brier Score</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">ECE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">QMSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">WMSE</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
@@ -1664,7 +1626,7 @@ Note
 </section>
 <section id="calculating-the-metrics" class="level3" data-number="4.6.2">
 <h3 data-number="4.6.2" class="anchored" data-anchor-id="calculating-the-metrics"><span class="header-section-number">4.6.2</span> Calculating the Metrics</h3>
-<p>Next, we define the function <code class="sourceCode r"><span class="fu">calib_metrics_rf_uncalib</span>()</code> which computes the true MSE and the calibration metrics from <a href="#sec-calibration"><span class="quarto-unresolved-ref">sec-calibration</span></a>, from a single replication of the simulations.</p>
+<p>Next, we define the function <code class="sourceCode r"><span class="fu">calib_metrics_rf_uncalib</span>()</code> which computes the true MSE and the calibration metrics from <a href="calibration.html"><span>Chapter&nbsp;1</span></a>, from a single replication of the simulations.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes calibration metrics on a simulation, with uncalibrated scores</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -1801,7 +1763,7 @@ Note
 <span id="cb40-133"><a href="#cb40-133" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let us apply the <code class="sourceCode r"><span class="fu">calib_metrics_rf_uncalib</span>()</code> function to all the simulations.</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Classification</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
@@ -1823,12 +1785,6 @@ Note
 <span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>calibration_rf_simuls <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(calibration_rf_simuls)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
@@ -1849,19 +1805,13 @@ Note
 <span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>calibration_rf_simuls_vote <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(calibration_rf_simuls_vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 </div>
 </div>
 </section>
 <section id="results-1" class="level3" data-number="4.6.3">
 <h3 data-number="4.6.3" class="anchored" data-anchor-id="results-1"><span class="header-section-number">4.6.3</span> Results</h3>
-<p>Let us visualize how the metrics vary from one replication to another, on the train set, on the calibration set, and on the test set. Note that since we did not recalibrate the scores <span class="math inline">\(s(\boldsymbol x)\)</span>, the calibration and the test set should exhibit similar values for the different metrics: they both are unseen data from the same DGP. The boxplots are shown in <a href="#fig-metrics-calibration-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-calibration-rf</span></a> (regression) and in <a href="#fig-metrics-calibration-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-metrics-calibration-rf-both</span></a> (classification).</p>
+<p>Let us visualize how the metrics vary from one replication to another, on the train set, on the calibration set, and on the test set. Note that since we did not recalibrate the scores <span class="math inline">\(s(\boldsymbol x)\)</span>, the calibration and the test set should exhibit similar values for the different metrics: they both are unseen data from the same DGP. The boxplots are shown in <a href="#fig-metrics-calibration-rf">Figure&nbsp;<span>4.11</span></a> (regression) and in <a href="#fig-metrics-calibration-rf-both">Figure&nbsp;<span>4.13</span></a> (classification).</p>
 <section id="regression-3" class="level4" data-number="4.6.3.1">
 <h4 data-number="4.6.3.1" class="anchored" data-anchor-id="regression-3"><span class="header-section-number">4.6.3.1</span> Regression</h4>
 <p>First, let us turn the <code>sample</code> column of the results as a factor.</p>
@@ -1903,13 +1853,13 @@ Note
 <div class="cell-output-display">
 <div id="fig-metrics-calibration-rf" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.11: Goodness of fit and calibration metrics of the Random Forest (regression).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.11: Goodness of fit and calibration metrics of the Random Forest (regression).</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-metrics-calibration-rf-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf">Table&nbsp;<span class="quarto-unresolved-ref">tbl-summary-stats-rf</span></a>.</p>
+<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf">Table&nbsp;<span>4.1</span></a>.</p>
 <div class="cell">
 <details>
 <summary>Display the R codes used to produce the Table.</summary>
@@ -1943,180 +1893,191 @@ Note
 </details>
 <div class="cell-output-display">
 <div id="tbl-summary-stats-rf" class="anchored">
-
-<table class="table" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;4.1:  True MSE and Calibration Metrics for the Random Forest (regression). </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Sample </th>
-   <th style="text-align:right;"> Mean </th>
-   <th style="text-align:right;"> Std </th>
-   <th style="text-align:right;"> Q1 </th>
-   <th style="text-align:right;"> Median </th>
-   <th style="text-align:right;"> Q3 </th>
-   <th style="text-align:right;"> Min </th>
-   <th style="text-align:right;"> Max </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;4.1: True MSE and Calibration Metrics for the Random Forest (regression).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Max</th>
+</tr>
+</thead>
 <tbody>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>True MSE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.017 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0.017 </td>
-   <td style="text-align:right;"> 0.017 </td>
-   <td style="text-align:right;"> 0.018 </td>
-   <td style="text-align:right;"> 0.015 </td>
-   <td style="text-align:right;"> 0.020 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.018 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0.017 </td>
-   <td style="text-align:right;"> 0.018 </td>
-   <td style="text-align:right;"> 0.019 </td>
-   <td style="text-align:right;"> 0.015 </td>
-   <td style="text-align:right;"> 0.022 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.018 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0.017 </td>
-   <td style="text-align:right;"> 0.018 </td>
-   <td style="text-align:right;"> 0.019 </td>
-   <td style="text-align:right;"> 0.014 </td>
-   <td style="text-align:right;"> 0.023 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>Brier Score</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.208 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0.207 </td>
-   <td style="text-align:right;"> 0.209 </td>
-   <td style="text-align:right;"> 0.209 </td>
-   <td style="text-align:right;"> 0.205 </td>
-   <td style="text-align:right;"> 0.212 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.254 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.252 </td>
-   <td style="text-align:right;"> 0.254 </td>
-   <td style="text-align:right;"> 0.257 </td>
-   <td style="text-align:right;"> 0.244 </td>
-   <td style="text-align:right;"> 0.263 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.254 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.252 </td>
-   <td style="text-align:right;"> 0.254 </td>
-   <td style="text-align:right;"> 0.257 </td>
-   <td style="text-align:right;"> 0.243 </td>
-   <td style="text-align:right;"> 0.264 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>ECE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.272 </td>
-   <td style="text-align:right;"> 0.022 </td>
-   <td style="text-align:right;"> 0.256 </td>
-   <td style="text-align:right;"> 0.273 </td>
-   <td style="text-align:right;"> 0.287 </td>
-   <td style="text-align:right;"> 0.216 </td>
-   <td style="text-align:right;"> 0.329 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.063 </td>
-   <td style="text-align:right;"> 0.020 </td>
-   <td style="text-align:right;"> 0.049 </td>
-   <td style="text-align:right;"> 0.063 </td>
-   <td style="text-align:right;"> 0.075 </td>
-   <td style="text-align:right;"> 0.019 </td>
-   <td style="text-align:right;"> 0.128 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.061 </td>
-   <td style="text-align:right;"> 0.018 </td>
-   <td style="text-align:right;"> 0.048 </td>
-   <td style="text-align:right;"> 0.060 </td>
-   <td style="text-align:right;"> 0.071 </td>
-   <td style="text-align:right;"> 0.020 </td>
-   <td style="text-align:right;"> 0.115 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>QMSE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.061 </td>
-   <td style="text-align:right;"> 0.009 </td>
-   <td style="text-align:right;"> 0.055 </td>
-   <td style="text-align:right;"> 0.061 </td>
-   <td style="text-align:right;"> 0.068 </td>
-   <td style="text-align:right;"> 0.040 </td>
-   <td style="text-align:right;"> 0.084 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.007 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.007 </td>
-   <td style="text-align:right;"> 0.010 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0.019 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.007 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.006 </td>
-   <td style="text-align:right;"> 0.009 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0.019 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>WMSE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.059 </td>
-   <td style="text-align:right;"> 0.009 </td>
-   <td style="text-align:right;"> 0.052 </td>
-   <td style="text-align:right;"> 0.059 </td>
-   <td style="text-align:right;"> 0.067 </td>
-   <td style="text-align:right;"> 0.038 </td>
-   <td style="text-align:right;"> 0.082 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.041 </td>
-   <td style="text-align:right;"> 0.014 </td>
-   <td style="text-align:right;"> 0.031 </td>
-   <td style="text-align:right;"> 0.040 </td>
-   <td style="text-align:right;"> 0.049 </td>
-   <td style="text-align:right;"> 0.010 </td>
-   <td style="text-align:right;"> 0.088 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.039 </td>
-   <td style="text-align:right;"> 0.013 </td>
-   <td style="text-align:right;"> 0.028 </td>
-   <td style="text-align:right;"> 0.037 </td>
-   <td style="text-align:right;"> 0.048 </td>
-   <td style="text-align:right;"> 0.012 </td>
-   <td style="text-align:right;"> 0.072 </td>
-  </tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>True MSE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.020</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.023</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>Brier Score</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.208</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.207</td>
+<td style="text-align: right;">0.209</td>
+<td style="text-align: right;">0.209</td>
+<td style="text-align: right;">0.205</td>
+<td style="text-align: right;">0.212</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">0.257</td>
+<td style="text-align: right;">0.244</td>
+<td style="text-align: right;">0.263</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.252</td>
+<td style="text-align: right;">0.254</td>
+<td style="text-align: right;">0.257</td>
+<td style="text-align: right;">0.243</td>
+<td style="text-align: right;">0.264</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>ECE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.272</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.256</td>
+<td style="text-align: right;">0.273</td>
+<td style="text-align: right;">0.287</td>
+<td style="text-align: right;">0.216</td>
+<td style="text-align: right;">0.329</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.063</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.063</td>
+<td style="text-align: right;">0.075</td>
+<td style="text-align: right;">0.019</td>
+<td style="text-align: right;">0.128</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">0.071</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">0.115</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>QMSE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.055</td>
+<td style="text-align: right;">0.061</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">0.084</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.019</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>WMSE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.052</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">0.038</td>
+<td style="text-align: right;">0.082</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.014</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.088</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.039</td>
+<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">0.048</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">0.072</td>
+</tr>
 </tbody>
 </table>
-
 </div>
+
+
 </div>
 </div>
 </section>
@@ -2161,13 +2122,13 @@ Note
 <div class="cell-output-display">
 <div id="fig-metrics-calibration-rf-vote" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.12: Goodness of fit and calibration metrics of the Random Forest (classification).</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.12: Goodness of fit and calibration metrics of the Random Forest (classification).</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-metrics-calibration-rf-vote-1.png" class="img-fluid figure-img" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf-vote">Table&nbsp;<span class="quarto-unresolved-ref">tbl-summary-stats-rf-vote</span></a>.</p>
+<p>Let us also show some summary statistics of these metrics. The values are reported in <a href="#tbl-summary-stats-rf-vote">Table&nbsp;<span>4.2</span></a>.</p>
 <div class="cell">
 <details>
 <summary>Display the R codes used to produce the Table.</summary>
@@ -2201,180 +2162,191 @@ Note
 </details>
 <div class="cell-output-display">
 <div id="tbl-summary-stats-rf-vote" class="anchored">
-
-<table class="table" style="margin-left: auto; margin-right: auto;"><caption>Table&nbsp;4.2:  True MSE and Calibration Metrics for the Random Forest (regression). </caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Sample </th>
-   <th style="text-align:right;"> Mean </th>
-   <th style="text-align:right;"> Std </th>
-   <th style="text-align:right;"> Q1 </th>
-   <th style="text-align:right;"> Median </th>
-   <th style="text-align:right;"> Q3 </th>
-   <th style="text-align:right;"> Min </th>
-   <th style="text-align:right;"> Max </th>
-  </tr>
- </thead>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Table&nbsp;4.2: True MSE and Calibration Metrics for the Random Forest (regression).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sample</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Std</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Q3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Max</th>
+</tr>
+</thead>
 <tbody>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>True MSE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.040 </td>
-   <td style="text-align:right;"> 0.006 </td>
-   <td style="text-align:right;"> 0.036 </td>
-   <td style="text-align:right;"> 0.040 </td>
-   <td style="text-align:right;"> 0.044 </td>
-   <td style="text-align:right;"> 0.030 </td>
-   <td style="text-align:right;"> 0.058 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.041 </td>
-   <td style="text-align:right;"> 0.006 </td>
-   <td style="text-align:right;"> 0.037 </td>
-   <td style="text-align:right;"> 0.041 </td>
-   <td style="text-align:right;"> 0.045 </td>
-   <td style="text-align:right;"> 0.029 </td>
-   <td style="text-align:right;"> 0.060 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.041 </td>
-   <td style="text-align:right;"> 0.006 </td>
-   <td style="text-align:right;"> 0.037 </td>
-   <td style="text-align:right;"> 0.040 </td>
-   <td style="text-align:right;"> 0.045 </td>
-   <td style="text-align:right;"> 0.026 </td>
-   <td style="text-align:right;"> 0.058 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>Brier Score</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.202 </td>
-   <td style="text-align:right;"> 0.003 </td>
-   <td style="text-align:right;"> 0.200 </td>
-   <td style="text-align:right;"> 0.202 </td>
-   <td style="text-align:right;"> 0.204 </td>
-   <td style="text-align:right;"> 0.193 </td>
-   <td style="text-align:right;"> 0.211 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.277 </td>
-   <td style="text-align:right;"> 0.011 </td>
-   <td style="text-align:right;"> 0.270 </td>
-   <td style="text-align:right;"> 0.277 </td>
-   <td style="text-align:right;"> 0.285 </td>
-   <td style="text-align:right;"> 0.250 </td>
-   <td style="text-align:right;"> 0.306 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.277 </td>
-   <td style="text-align:right;"> 0.011 </td>
-   <td style="text-align:right;"> 0.269 </td>
-   <td style="text-align:right;"> 0.276 </td>
-   <td style="text-align:right;"> 0.284 </td>
-   <td style="text-align:right;"> 0.251 </td>
-   <td style="text-align:right;"> 0.312 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>ECE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.185 </td>
-   <td style="text-align:right;"> 0.025 </td>
-   <td style="text-align:right;"> 0.167 </td>
-   <td style="text-align:right;"> 0.182 </td>
-   <td style="text-align:right;"> 0.199 </td>
-   <td style="text-align:right;"> 0.133 </td>
-   <td style="text-align:right;"> 0.271 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.134 </td>
-   <td style="text-align:right;"> 0.025 </td>
-   <td style="text-align:right;"> 0.117 </td>
-   <td style="text-align:right;"> 0.134 </td>
-   <td style="text-align:right;"> 0.150 </td>
-   <td style="text-align:right;"> 0.060 </td>
-   <td style="text-align:right;"> 0.211 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.134 </td>
-   <td style="text-align:right;"> 0.029 </td>
-   <td style="text-align:right;"> 0.115 </td>
-   <td style="text-align:right;"> 0.133 </td>
-   <td style="text-align:right;"> 0.152 </td>
-   <td style="text-align:right;"> 0.064 </td>
-   <td style="text-align:right;"> 0.211 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>QMSE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.007 </td>
-   <td style="text-align:right;"> 0.003 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.006 </td>
-   <td style="text-align:right;"> 0.008 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0.019 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.029 </td>
-   <td style="text-align:right;"> 0.010 </td>
-   <td style="text-align:right;"> 0.021 </td>
-   <td style="text-align:right;"> 0.028 </td>
-   <td style="text-align:right;"> 0.035 </td>
-   <td style="text-align:right;"> 0.006 </td>
-   <td style="text-align:right;"> 0.063 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.029 </td>
-   <td style="text-align:right;"> 0.010 </td>
-   <td style="text-align:right;"> 0.021 </td>
-   <td style="text-align:right;"> 0.027 </td>
-   <td style="text-align:right;"> 0.035 </td>
-   <td style="text-align:right;"> 0.009 </td>
-   <td style="text-align:right;"> 0.058 </td>
-  </tr>
-  <tr grouplength="3"><td colspan="8" style="border-bottom: 1px solid;"><strong>WMSE</strong></td></tr>
-<tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Train </td>
-   <td style="text-align:right;"> 0.005 </td>
-   <td style="text-align:right;"> 0.003 </td>
-   <td style="text-align:right;"> 0.004 </td>
-   <td style="text-align:right;"> 0.005 </td>
-   <td style="text-align:right;"> 0.006 </td>
-   <td style="text-align:right;"> 0.002 </td>
-   <td style="text-align:right;"> 0.016 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Calibration </td>
-   <td style="text-align:right;"> 0.059 </td>
-   <td style="text-align:right;"> 0.015 </td>
-   <td style="text-align:right;"> 0.049 </td>
-   <td style="text-align:right;"> 0.059 </td>
-   <td style="text-align:right;"> 0.067 </td>
-   <td style="text-align:right;"> 0.028 </td>
-   <td style="text-align:right;"> 0.114 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Test </td>
-   <td style="text-align:right;"> 0.057 </td>
-   <td style="text-align:right;"> 0.015 </td>
-   <td style="text-align:right;"> 0.047 </td>
-   <td style="text-align:right;"> 0.056 </td>
-   <td style="text-align:right;"> 0.068 </td>
-   <td style="text-align:right;"> 0.022 </td>
-   <td style="text-align:right;"> 0.092 </td>
-  </tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>True MSE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.036</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">0.058</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.060</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.041</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">0.040</td>
+<td style="text-align: right;">0.045</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.058</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>Brier Score</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.202</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.202</td>
+<td style="text-align: right;">0.204</td>
+<td style="text-align: right;">0.193</td>
+<td style="text-align: right;">0.211</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.277</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.270</td>
+<td style="text-align: right;">0.277</td>
+<td style="text-align: right;">0.285</td>
+<td style="text-align: right;">0.250</td>
+<td style="text-align: right;">0.306</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.277</td>
+<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">0.269</td>
+<td style="text-align: right;">0.276</td>
+<td style="text-align: right;">0.284</td>
+<td style="text-align: right;">0.251</td>
+<td style="text-align: right;">0.312</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>ECE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.185</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.167</td>
+<td style="text-align: right;">0.182</td>
+<td style="text-align: right;">0.199</td>
+<td style="text-align: right;">0.133</td>
+<td style="text-align: right;">0.271</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.134</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.117</td>
+<td style="text-align: right;">0.134</td>
+<td style="text-align: right;">0.150</td>
+<td style="text-align: right;">0.060</td>
+<td style="text-align: right;">0.211</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.134</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.133</td>
+<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">0.211</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>QMSE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.019</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.063</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.021</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.009</td>
+<td style="text-align: right;">0.058</td>
+</tr>
+<tr class="odd" data-grouplength="3">
+<td colspan="8" style="border-bottom: 1px solid"><strong>WMSE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Train</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.005</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Calibration</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.049</td>
+<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">0.028</td>
+<td style="text-align: right;">0.114</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding-left: 2em;" data-indentlevel="1">Test</td>
+<td style="text-align: right;">0.057</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.092</td>
+</tr>
 </tbody>
 </table>
-
 </div>
+
+
 </div>
 </div>
 </section>
@@ -2429,7 +2401,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-metrics-calibration-rf-both" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.13: Goodness of fit and calibration metrics of the Random Forest (not recalibrated), estimated in a regression context or in a classification context.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.13: Goodness of fit and calibration metrics of the Random Forest (not recalibrated), estimated in a regression context or in a classification context.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-metrics-calibration-rf-both-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
@@ -2440,12 +2412,12 @@ Note
 </section>
 <section id="sec-rf-calib-viz" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="sec-rf-calib-viz"><span class="header-section-number">4.7</span> Calibration Visualizations</h2>
-<p>Let us now turn to visualization techniques to observe the calibration of random forest, as in <a href="#sec-calib-visualization"><span class="quarto-unresolved-ref">sec-calib-visualization</span></a> in <a href="#sec-calibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-calibration</span></a>.</p>
+<p>Let us now turn to visualization techniques to observe the calibration of random forest, as in <a href="calibration.html#sec-calib-visualization"><span>Section&nbsp;1.6</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>.</p>
 <section id="sec-calib-rf-viz-functions" class="level3" data-number="4.7.1">
 <h3 data-number="4.7.1" class="anchored" data-anchor-id="sec-calib-rf-viz-functions"><span class="header-section-number">4.7.1</span> Helper Functions</h3>
 <section id="sec-ml-calib-rf-quantile-based-bins" class="level4" data-number="4.7.1.1">
 <h4 data-number="4.7.1.1" class="anchored" data-anchor-id="sec-ml-calib-rf-quantile-based-bins"><span class="header-section-number">4.7.1.1</span> Quantile-Based Bins</h4>
-<p>We rely here on the <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code> function defined in the helper functions (<a href="#sec-calib-rf-metrics-functions"><span class="quarto-unresolved-ref">sec-calib-rf-metrics-functions</span></a>) for the ECE.</p>
+<p>We rely here on the <code class="sourceCode r"><span class="fu">get_summary_bins</span>()</code> function defined in the helper functions (<a href="#sec-calib-rf-metrics-functions"><span>Section&nbsp;4.6.1</span></a>) for the ECE.</p>
 <p>Let us define a function, <code class="sourceCode r"><span class="fu">calib_curve_quant_simul_rf</span>()</code>, to get the calibration curve for a single simulation of the random forest.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get the calibration curve for one simulation for the random forest,</span></span>
@@ -2663,7 +2635,7 @@ Note
 <section id="quantile-based-bins" class="level3" data-number="4.7.2">
 <h3 data-number="4.7.2" class="anchored" data-anchor-id="quantile-based-bins"><span class="header-section-number">4.7.2</span> Quantile-based Bins</h3>
 <p>Let us get the different curves for all the simulations.</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Classification</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
@@ -2684,12 +2656,6 @@ Note
 <span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_quant_rf <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(tb_calibration_curve_quant_rf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
@@ -2712,17 +2678,11 @@ Note
 <span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_quant_rf_vote <span class="ot">&lt;-</span> </span>
 <span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list_rbind</span>(tb_calibration_curve_quant_rf_vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
 </div>
 </div>
 </div>
-</div>
-<p>Now, we can plot the calibration curve on each sample (train, calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-rf</span></a> (regression), in <a href="#fig-calib-curve-quantile-rf-vote">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-rf-vote</span></a> (classification), and in <a href="#fig-calib-curve-quantile-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-quantile-rf-both</span></a> (comparison of the two).</p>
-<div class="panel-tabset">
+<p>Now, we can plot the calibration curve on each sample (train, calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-rf">Figure&nbsp;<span>4.14</span></a> (regression), in <a href="#fig-calib-curve-quantile-rf-vote">Figure&nbsp;<span>4.15</span></a> (classification), and in <a href="#fig-calib-curve-quantile-rf-both">Figure&nbsp;<span>4.16</span></a> (comparison of the two).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
@@ -2764,7 +2724,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-quantile-rf" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.14: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with quantile-based bins.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.14: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with quantile-based bins.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-quantile-rf-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -2810,7 +2770,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-quantile-rf-vote" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.15: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with quantile-based bins.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.15: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with quantile-based bins.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-quantile-rf-vote-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -2866,7 +2826,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-quantile-rf-both" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.16: Calibration curve for the 200 replications of the estimation of the Random Forest estimated in a regression context or a calibration context, obtained with quantile-based bins.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.16: Calibration curve for the 200 replications of the estimation of the Random Forest estimated in a regression context or a calibration context, obtained with quantile-based bins.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-quantile-rf-both-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -2879,7 +2839,7 @@ Note
 <section id="local-regression" class="level3" data-number="4.7.3">
 <h3 data-number="4.7.3" class="anchored" data-anchor-id="local-regression"><span class="header-section-number">4.7.3</span> Local Regression</h3>
 <p>Let us get the different curves for all the simulations.</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Classification</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
@@ -2901,12 +2861,6 @@ Note
 <span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_locfit_rf <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(tb_calibration_curve_locfit_rf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="cell">
@@ -2927,18 +2881,12 @@ Note
 <span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_locfit_rf_vote <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(tb_calibration_curve_locfit_rf_vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 </div>
 </div>
 <p>Lastly, we can plot the calibration curve obtained with local regressions on each sample (train, calibration, test). Contrary to the calibration curve obtained with the quantile-defined bins, we do not need to plot all the curves: the mean predicted probability is predicted at different values over the segment [0,1], and not only computed in bins for which the cutoff are a function of the data.</p>
-<p>The curves are shown in <a href="#fig-calib-curve-locfit-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-locfit-rf</span></a> (regression), in <a href="#fig-calib-curve-locfit-rf-vote">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-locfit-rf-vote</span></a> (classification), and in <a href="#fig-calib-curve-locfit-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-locfit-rf-both</span></a> (comparison of the two).</p>
-<div class="panel-tabset">
+<p>The curves are shown in <a href="#fig-calib-curve-locfit-rf">Figure&nbsp;<span>4.17</span></a> (regression), in <a href="#fig-calib-curve-locfit-rf-vote">Figure&nbsp;<span>4.18</span></a> (classification), and in <a href="#fig-calib-curve-locfit-rf-both">Figure&nbsp;<span>4.19</span></a> (comparison of the two).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
@@ -2993,7 +2941,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-locfit-rf" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.17: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with local regressions.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.17: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with local regressions.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-locfit-rf-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -3052,7 +3000,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-locfit-rf-vote" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.18: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with local regressions.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.18: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with local regressions.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-locfit-rf-vote-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -3119,7 +3067,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-locfit-rf-both" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.19: Calibration curve for the 200 replications of the estimation of the Random Forest estimated in a regression context or a calibration context, obtained with local regressions.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.19: Calibration curve for the 200 replications of the estimation of the Random Forest estimated in a regression context or a calibration context, obtained with local regressions.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-locfit-rf-both-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -3132,7 +3080,7 @@ Note
 <section id="moving-average" class="level3" data-number="4.7.4">
 <h3 data-number="4.7.4" class="anchored" data-anchor-id="moving-average"><span class="header-section-number">4.7.4</span> Moving Average</h3>
 <p>Let us get the different curves for all the simulations.</p>
-<div class="panel-tabset">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Classification</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
@@ -3153,12 +3101,6 @@ Note
 <span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_ma_rf <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(tb_calibration_curve_ma_rf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
@@ -3178,18 +3120,12 @@ Note
 <span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_ma_rf_vote <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(tb_calibration_curve_ma_rf_vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 </div>
 </div>
 </div>
 <p>Lastly, we can plot the calibration curve obtained with moving averages on each sample (train, calibration, test).</p>
-<p>The curves are shown in <a href="#fig-calib-curve-ma-rf">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-ma-rf</span></a> (regression), <a href="#fig-calib-curve-ma-rf-vote">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-ma-rf-vote</span></a> (classification), and in <a href="#fig-calib-curve-ma-rf-both">Figure&nbsp;<span class="quarto-unresolved-ref">fig-calib-curve-ma-rf-both</span></a> (comparison of the two).</p>
-<div class="panel-tabset">
+<p>The curves are shown in <a href="#fig-calib-curve-ma-rf">Figure&nbsp;<span>4.20</span></a> (regression), <a href="#fig-calib-curve-ma-rf-vote">Figure&nbsp;<span>4.21</span></a> (classification), and in <a href="#fig-calib-curve-ma-rf-both">Figure&nbsp;<span>4.22</span></a> (comparison of the two).</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-3" role="tab" aria-controls="tabset-9-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
@@ -3244,7 +3180,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-ma-rf" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.20: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with moving averages.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.20: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with moving averages.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-ma-rf-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -3303,7 +3239,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-ma-rf-vote" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.21: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with moving averages.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.21: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with moving averages.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-ma-rf-vote-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -3370,7 +3306,7 @@ Note
 <div class="cell-output-display">
 <div id="fig-calib-curve-ma-rf-both" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.22: Calibration curve for the 200 replications of the estimation of the Random Forest estimated in a regression context or a calibration context, obtained with moving averages.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;4.22: Calibration curve for the 200 replications of the estimation of the Random Forest estimated in a regression context or a calibration context, obtained with moving averages.</figcaption>
 <p><img src="rf-calibration_files/figure-html/fig-calib-curve-ma-rf-both-1.png" class="img-fluid figure-img" width="864"></p>
 </figure>
 </div>
@@ -3412,9 +3348,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -3479,6 +3429,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
