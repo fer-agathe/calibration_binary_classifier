@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,10 +17,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,13 +46,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -91,8 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 <script type="text/x-mathjax-config">
@@ -118,7 +146,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 	});
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -127,16 +154,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./calibration.html">Calibration and Recalibration</a></li><li class="breadcrumb-item"><a href="./calibration.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav>
@@ -144,141 +166,127 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration</a> 
     </div>
       </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
+      <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-        </div>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Introduction</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Calibration and Recalibration</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Calibration and Recalibration</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./calibration.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></span></a>
+  <a href="./calibration.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./recalibration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Recalibration</span></span></a>
+  <a href="./recalibration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Recalibration</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Machine Learning and Calibration</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Machine Learning and Calibration</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-single.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(Re)Calibration of a Random Forest</span></span></a>
+  <a href="./rf-single.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">(Re)Calibration of a Random Forest</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-calibration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></span></a>
+  <a href="./rf-calibration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-recalibration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></span></a>
+  <a href="./rf-recalibration.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Real-world Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Real-world Data</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-grid-search.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Grid Search</span></span></a>
+  <a href="./rf-grid-search.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Grid Search</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-simulations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></span></a>
+  <a href="./rf-simulations.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Simulations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rf-simul-metrics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation Metrics and Viz</span></span></a>
+  <a href="./rf-simul-metrics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation Metrics and Viz</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-dgp" id="toc-sec-dgp" class="nav-link active" data-scroll-target="#sec-dgp"><span class="header-section-number">1.1</span> Data Generating Process</a>
+  <li><a href="#sec-dgp" id="toc-sec-dgp" class="nav-link active" data-scroll-target="#sec-dgp"><span class="toc-section-number">1.1</span>  Data Generating Process</a>
   <ul class="collapse">
-  <li><a href="#sec-decalibration" id="toc-sec-decalibration" class="nav-link" data-scroll-target="#sec-decalibration"><span class="header-section-number">1.1.1</span> Poor Calibration</a></li>
+  <li><a href="#sec-decalibration" id="toc-sec-decalibration" class="nav-link" data-scroll-target="#sec-decalibration"><span class="toc-section-number">1.1.1</span>  Poor Calibration</a></li>
   </ul></li>
-  <li><a href="#sec-measuring-calibration" id="toc-sec-measuring-calibration" class="nav-link" data-scroll-target="#sec-measuring-calibration"><span class="header-section-number">1.2</span> Measuring Calibration</a>
+  <li><a href="#sec-measuring-calibration" id="toc-sec-measuring-calibration" class="nav-link" data-scroll-target="#sec-measuring-calibration"><span class="toc-section-number">1.2</span>  Measuring Calibration</a>
   <ul class="collapse">
-  <li><a href="#metrics" id="toc-metrics" class="nav-link" data-scroll-target="#metrics"><span class="header-section-number">1.2.1</span> Metrics</a></li>
+  <li><a href="#metrics" id="toc-metrics" class="nav-link" data-scroll-target="#metrics"><span class="toc-section-number">1.2.1</span>  Metrics</a></li>
   </ul></li>
-  <li><a href="#settings-for-the-simulations" id="toc-settings-for-the-simulations" class="nav-link" data-scroll-target="#settings-for-the-simulations"><span class="header-section-number">1.3</span> Settings for the Simulations</a></li>
-  <li><a href="#sec-calib-standard-metrics-simul" id="toc-sec-calib-standard-metrics-simul" class="nav-link" data-scroll-target="#sec-calib-standard-metrics-simul"><span class="header-section-number">1.4</span> Standard Metrics on Simulations</a></li>
-  <li><a href="#sec-calib-metrics-simul" id="toc-sec-calib-metrics-simul" class="nav-link" data-scroll-target="#sec-calib-metrics-simul"><span class="header-section-number">1.5</span> Calibration Metrics on Simulations</a>
+  <li><a href="#settings-for-the-simulations" id="toc-settings-for-the-simulations" class="nav-link" data-scroll-target="#settings-for-the-simulations"><span class="toc-section-number">1.3</span>  Settings for the Simulations</a></li>
+  <li><a href="#sec-calib-standard-metrics-simul" id="toc-sec-calib-standard-metrics-simul" class="nav-link" data-scroll-target="#sec-calib-standard-metrics-simul"><span class="toc-section-number">1.4</span>  Standard Metrics on Simulations</a></li>
+  <li><a href="#sec-calib-metrics-simul" id="toc-sec-calib-metrics-simul" class="nav-link" data-scroll-target="#sec-calib-metrics-simul"><span class="toc-section-number">1.5</span>  Calibration Metrics on Simulations</a>
   <ul class="collapse">
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">1.5.1</span> Results</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="toc-section-number">1.5.1</span>  Results</a></li>
   </ul></li>
-  <li><a href="#sec-calib-visualization" id="toc-sec-calib-visualization" class="nav-link" data-scroll-target="#sec-calib-visualization"><span class="header-section-number">1.6</span> Visualizations</a>
+  <li><a href="#sec-calib-visualization" id="toc-sec-calib-visualization" class="nav-link" data-scroll-target="#sec-calib-visualization"><span class="toc-section-number">1.6</span>  Visualizations</a>
   <ul class="collapse">
-  <li><a href="#quantile-based-bins" id="toc-quantile-based-bins" class="nav-link" data-scroll-target="#quantile-based-bins"><span class="header-section-number">1.6.1</span> Quantile-Based Bins</a></li>
-  <li><a href="#calibration-curve-with-local-regression" id="toc-calibration-curve-with-local-regression" class="nav-link" data-scroll-target="#calibration-curve-with-local-regression"><span class="header-section-number">1.6.2</span> Calibration Curve with Local Regression</a></li>
-  <li><a href="#calibration-curve-with-moving-average-and-confidence-intervals" id="toc-calibration-curve-with-moving-average-and-confidence-intervals" class="nav-link" data-scroll-target="#calibration-curve-with-moving-average-and-confidence-intervals"><span class="header-section-number">1.6.3</span> Calibration Curve with Moving Average and Confidence Intervals</a></li>
+  <li><a href="#quantile-based-bins" id="toc-quantile-based-bins" class="nav-link" data-scroll-target="#quantile-based-bins"><span class="toc-section-number">1.6.1</span>  Quantile-Based Bins</a></li>
+  <li><a href="#calibration-curve-with-local-regression" id="toc-calibration-curve-with-local-regression" class="nav-link" data-scroll-target="#calibration-curve-with-local-regression"><span class="toc-section-number">1.6.2</span>  Calibration Curve with Local Regression</a></li>
+  <li><a href="#calibration-curve-with-moving-average-and-confidence-intervals" id="toc-calibration-curve-with-moving-average-and-confidence-intervals" class="nav-link" data-scroll-target="#calibration-curve-with-moving-average-and-confidence-intervals"><span class="toc-section-number">1.6.3</span>  Calibration Curve with Moving Average and Confidence Intervals</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -288,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-calibration" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></span></h1>
+<h1 class="title"><span id="sec-calibration" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Calibration</span></span></h1>
 </div>
 
 
@@ -312,11 +320,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.4
+✔ dplyr     1.1.3     ✔ readr     2.1.4
 ✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
-✔ purrr     1.0.2     
+✔ ggplot2   3.4.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -360,14 +368,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The distribution of the true probabilities are depicted in <a href="#fig-hist-true-prob-toy">Figure&nbsp;<span>1.1</span></a></p>
+<p>The distribution of the true probabilities are depicted in <a href="#fig-hist-true-prob-toy">Figure&nbsp;<span class="quarto-unresolved-ref">fig-hist-true-prob-toy</span></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.3</span>, <span class="fl">2.1</span>, <span class="fl">0.5</span>))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(p, <span class="at">xlab =</span> <span class="st">"p"</span>, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-hist-true-prob-toy" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.1: Distribution of the true probabilities</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.1: Distribution of the true probabilities</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-hist-true-prob-toy-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -380,7 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>one applied to the latent probability</li>
 <li>another applied to the linear predictor.</li>
 </ul>
-<p>In a more formal way, we will introduce two scaling parameters. The scaling parameter that modifies the latent probability changes <a href="#eq-true-propensity">Equation&nbsp;<span>1.1</span></a> which becomes: <span id="eq-true-propensity-decalibrated"><span class="math display">\[p_i^{u} = \left(\frac{1}{1+\exp(-\eta_i^u)}\right)^{\alpha} \tag{1.3}\]</span></span> The scaling parameter that modifies the linear predictor changes <a href="#eq-propensity-eta">Equation&nbsp;<span>1.4</span></a> which becomes: <span id="eq-propensity-eta"><span class="math display">\[\eta_i^u = \gamma \times \left( (-0.1)x_1 + 0.05x_2 + 0.2x_3 - 0.05x_4 + \varepsilon_i\right), \tag{1.4}\]</span></span></p>
+<p>In a more formal way, we will introduce two scaling parameters. The scaling parameter that modifies the latent probability changes <a href="#eq-true-propensity">Equation&nbsp;<span class="quarto-unresolved-ref">eq-true-propensity</span></a> which becomes: <span id="eq-true-propensity-decalibrated"><span class="math display">\[p_i^{u} = \left(\frac{1}{1+\exp(-\eta_i^u)}\right)^{\alpha} \tag{1.3}\]</span></span> The scaling parameter that modifies the linear predictor changes <a href="#eq-propensity-eta">Equation&nbsp;<span class="quarto-unresolved-ref">eq-propensity-eta</span></a> which becomes: <span id="eq-propensity-eta"><span class="math display">\[\eta_i^u = \gamma \times \left( (-0.1)x_1 + 0.05x_2 + 0.2x_3 - 0.05x_4 + \varepsilon_i\right), \tag{1.4}\]</span></span></p>
 <p>We define a function to simulate data according to the GDP. This function allows to transform the probabilities (by default, it does not).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Simulates data</span></span>
@@ -454,6 +462,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+
+</div>
 <p>Let us look at the transformed probabilities as a function as the true probabilities.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>true_prob_alphas <span class="ot">&lt;-</span> <span class="fu">map</span>(data_alphas, <span class="st">"p"</span>)</span>
@@ -494,7 +505,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div id="fig-proba-true-transformed-alpha" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.2: Transformed probabilities as a function of true probabilities</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.2: Transformed probabilities as a function of true probabilities</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-proba-true-transformed-alpha-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -528,7 +539,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div id="fig-proba-alphas-hist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.3: Effect of varying <span class="math inline">\(\alpha\)</span> on the latent probabilities</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.3: Effect of varying <span class="math inline">\(\alpha\)</span> on the latent probabilities</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-proba-alphas-hist-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -550,6 +561,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_obs =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">gamma =</span> .x</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
 </div>
 <p>Let us look at the transformed probabilities as a function as the true probabilities.</p>
 <div class="cell">
@@ -591,7 +605,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div id="fig-proba-true-transformed-gamma" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.4: Transformed probabilities as a function of true probabilities</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.4: Transformed probabilities as a function of true probabilities</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-proba-true-transformed-gamma-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -625,7 +639,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div id="fig-proba-gammas-hist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.5: Effect of varying <span class="math inline">\(\gamma\)</span> on the latent probabilities</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.5: Effect of varying <span class="math inline">\(\gamma\)</span> on the latent probabilities</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-proba-gammas-hist-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -639,12 +653,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A model is calibrated if:</p>
 <p><span class="math display">\[\mathbb{P}(D = d \mid s(x) = p) = p,\]</span></p>
 <p>for all values <span class="math inline">\(p \in[0,1]\)</span> and values <span class="math inline">\(d = \{0,1\}\)</span>, where <span class="math inline">\(s(x)\)</span> is the estimated score that is output by a model.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Warning
 </div>
 </div>
@@ -667,12 +681,12 @@ Warning
 <li>MSE on quantile-based bins (QMSE)</li>
 <li>Weighted MSE on the calibration curve defined on a continuum of values.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -830,7 +844,7 @@ Note
 </section>
 <section id="sec-qmse" class="level4" data-number="1.2.1.4">
 <h4 data-number="1.2.1.4" class="anchored" data-anchor-id="sec-qmse"><span class="header-section-number">1.2.1.4</span> QMSE</h4>
-<p>Let us compute the MSE on based on the quantile-defined bins (as explained in <a href="#sec-ece"><span>Section&nbsp;1.2.1.3</span></a>). To do so, we first calculate the quantiles of the predicted scores: <span class="math inline">\(p_\tau\)</span>. This allows us to define bins <span class="math inline">\(b=1,\ldots, B\)</span> based on the quantiles.</p>
+<p>Let us compute the MSE on based on the quantile-defined bins (as explained in <a href="#sec-ece"><span class="quarto-unresolved-ref">sec-ece</span></a>). To do so, we first calculate the quantiles of the predicted scores: <span class="math inline">\(p_\tau\)</span>. This allows us to define bins <span class="math inline">\(b=1,\ldots, B\)</span> based on the quantiles.</p>
 <p>For each bin, we compute the average of the observed event: <span class="math display">\[\bar{d}_b = \frac{1}{n_b} \sum_{i\in b} d_i,\]</span> where <span class="math inline">\(n_b\)</span> is the number of observation in bin <span class="math inline">\(b\)</span>.</p>
 <p>Then, we can compute the confidence in each bin, <em>i.e</em>, the average of the predicted score <span class="math inline">\(s(x)\)</span>: <span class="math display">\[\text{conf}(b) = \frac{1}{n_b} \sum_{i\in b} s(x),\]</span></p>
 <p>where <span class="math inline">\(s(x)\)</span> are the estimated probabilities.</p>
@@ -982,10 +996,10 @@ Note
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
-Attaching package: 'locfit'</code></pre>
+Attachement du package : 'locfit'</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:purrr':
+<pre><code>L'objet suivant est masqué depuis 'package:purrr':
 
     none</code></pre>
 </div>
@@ -1035,9 +1049,9 @@ Attaching package: 'locfit'</code></pre>
 </section>
 <section id="settings-for-the-simulations" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="settings-for-the-simulations"><span class="header-section-number">1.3</span> Settings for the Simulations</h2>
-<p>We will now run some simulations on uncalibrated models. To do so, we will consider more or less distorted probabilities <span class="math inline">\(p^u\)</span> (see <a href="#sec-decalibration"><span>Section&nbsp;1.1.1</span></a>). For each simulation, we first split the dataset into two parts: a calibration and a test set. While this step is not necessary here, it will be of crucial importance in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a>. On the test set, we will compute standard metrics (such as MSE, accuracy, and so on, in <a href="#sec-calib-metrics-simul"><span>Section&nbsp;1.5</span></a>) and then we will consider the previously defined calibration metrics (<a href="#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a>).</p>
+<p>We will now run some simulations on uncalibrated models. To do so, we will consider more or less distorted probabilities <span class="math inline">\(p^u\)</span> (see <a href="#sec-decalibration"><span class="quarto-unresolved-ref">sec-decalibration</span></a>). For each simulation, we first split the dataset into two parts: a calibration and a test set. While this step is not necessary here, it will be of crucial importance in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a>. On the test set, we will compute standard metrics (such as MSE, accuracy, and so on, in <a href="#sec-calib-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-metrics-simul</span></a>) and then we will consider the previously defined calibration metrics (<a href="#sec-calib-standard-metrics-simul"><span class="quarto-unresolved-ref">sec-calib-standard-metrics-simul</span></a>).</p>
 <p>For each value of <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> that transform the initial probabilities, we replicate the simulations 200 times.</p>
-<p>Let us define a function, <code class="sourceCode r"><span class="fu">get_samples</span>()</code> which generates data from the DGP described in <a href="#sec-dgp"><span>Section&nbsp;1.1</span></a>.</p>
+<p>Let us define a function, <code class="sourceCode r"><span class="fu">get_samples</span>()</code> which generates data from the DGP described in <a href="#sec-dgp"><span class="quarto-unresolved-ref">sec-dgp</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get calibration/test samples from the DGP</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -1101,7 +1115,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 0, &amp; \text{if } s(\boldsymbol x) &lt; \tau,\\
 \end{cases}
 \]</span> We will consider different values of <span class="math inline">\(\tau\)</span> for each replication of <span class="math inline">\(h\)</span>.</p>
-<p>For specific values of <span class="math inline">\(\tau\)</span>, we can compute multiple goodness of fit metrics, based on the confusion table shown in <a href="#tbl-confusion-matrix">Table&nbsp;<span>1.1</span></a>.</p>
+<p>For specific values of <span class="math inline">\(\tau\)</span>, we can compute multiple goodness of fit metrics, based on the confusion table shown in <a href="#tbl-confusion-matrix">Table&nbsp;<span class="quarto-unresolved-ref">tbl-confusion-matrix</span></a>.</p>
 <div id="tbl-confusion-matrix" class="anchored">
 <table class="table">
 <caption>Table&nbsp;1.1: Confusion matrix.</caption>
@@ -1351,6 +1365,12 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>metrics_gamma <span class="ot">&lt;-</span> <span class="fu">list_rbind</span>(metrics_gamma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
 <p>We define function <code class="sourceCode r"><span class="fu">boxplot_simuls_metrics</span>()</code> to plot the results of the simulations. This function will produce a panel of boxplots. Each row of the panel will correspond to a metric whereas each column will correspond to a value for either <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span>. On each figure, the x-axis will correspond to the value used for the probability threshold <span class="math inline">\(\tau\)</span>, and the y-axis will correspond to the values of the metric.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Boxplots for the simulations to visualize the distribution of some </span></span>
@@ -1463,11 +1483,11 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb47-108"><a href="#cb47-108" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb47-109"><a href="#cb47-109" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We aim to create a set of boxplots to visually assess the influence of probability transformations using <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> on standard metrics. Whenever <span class="math inline">\(\alpha \neq 1\)</span> or <span class="math inline">\(\gamma \neq 1\)</span>, the resulting scores <span class="math inline">\(p^u\)</span> represent values akin to those obtained from an uncalibrated model. Our focus is on investigating whether these transformations have any discernible impact on the standard metrics. The key question is to understand if adjusting the probabilities through these transformations introduces noticeable changes in the model’s performance as evaluated by the standard metrics. The results are shown in <a href="#fig-standard-metrics-calib-boxplot-alpha">Figure&nbsp;<span>1.6</span></a> for vayring values of <span class="math inline">\(\alpha\)</span>, and in <a href="#fig-standard-metrics-calib-boxplot-gamma">Figure&nbsp;<span>1.7</span></a> for vayring values of <span class="math inline">\(\gamma\)</span>.</p>
+<p>We aim to create a set of boxplots to visually assess the influence of probability transformations using <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span> on standard metrics. Whenever <span class="math inline">\(\alpha \neq 1\)</span> or <span class="math inline">\(\gamma \neq 1\)</span>, the resulting scores <span class="math inline">\(p^u\)</span> represent values akin to those obtained from an uncalibrated model. Our focus is on investigating whether these transformations have any discernible impact on the standard metrics. The key question is to understand if adjusting the probabilities through these transformations introduces noticeable changes in the model’s performance as evaluated by the standard metrics. The results are shown in <a href="#fig-standard-metrics-calib-boxplot-alpha">Figure&nbsp;<span class="quarto-unresolved-ref">fig-standard-metrics-calib-boxplot-alpha</span></a> for vayring values of <span class="math inline">\(\alpha\)</span>, and in <a href="#fig-standard-metrics-calib-boxplot-gamma">Figure&nbsp;<span class="quarto-unresolved-ref">fig-standard-metrics-calib-boxplot-gamma</span></a> for vayring values of <span class="math inline">\(\gamma\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"mse"</span>, <span class="st">"accuracy"</span>, <span class="st">"sensitivity"</span>, <span class="st">"specificity"</span>, <span class="st">"roc"</span>, <span class="st">"auc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Varying <span class="math inline">\(\alpha\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Varying <span class="math inline">\(\gamma\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
@@ -1482,7 +1502,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-standard-metrics-calib-boxplot-alpha" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.6: Calibration transformations made by varying <span class="math inline">\(\alpha\)</span> and impact on standard metrics. The model is calibrated when <span class="math inline">\(\alpha=1\)</span>.</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.6: Calibration transformations made by varying <span class="math inline">\(\alpha\)</span> and impact on standard metrics. The model is calibrated when <span class="math inline">\(\alpha=1\)</span>.</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-standard-metrics-calib-boxplot-alpha-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -1499,7 +1519,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-standard-metrics-calib-boxplot-gamma" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.7: Calibration transformations made by varying <span class="math inline">\(\gamma\)</span> and impact on standard metrics. The model is calibrated when <span class="math inline">\(\beta=1\)</span>.</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.7: Calibration transformations made by varying <span class="math inline">\(\gamma\)</span> and impact on standard metrics. The model is calibrated when <span class="math inline">\(\beta=1\)</span>.</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-standard-metrics-calib-boxplot-gamma-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -1570,7 +1590,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calib-simuls-std-metrics" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.8: Standard Goodness of Fit Metrics on 200 Simulations for each Value of <span class="math inline">\(\alpha\)</span> (top) or <span class="math inline">\(\gamma\)</span> (bottom. The probability threshold is set to <span class="math inline">\(\tau=0.5\)</span></figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.8: Standard Goodness of Fit Metrics on 200 Simulations for each Value of <span class="math inline">\(\alpha\)</span> (top) or <span class="math inline">\(\gamma\)</span> (bottom. The probability threshold is set to <span class="math inline">\(\tau=0.5\)</span></figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calib-simuls-std-metrics-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -1773,6 +1793,9 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
+
+</div>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"calib_metrics.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
@@ -1803,11 +1826,11 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Varying <span class="math inline">\(\alpha\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Varying <span class="math inline">\(\gamma\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">MSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Brier Score</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">ECE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">QMSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false">WMSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-6" role="tab" aria-controls="tabset-2-6" aria-selected="false">LCS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
@@ -1856,7 +1879,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">MSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Brier Score</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">ECE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">QMSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-5" role="tab" aria-controls="tabset-3-5" aria-selected="false">WMSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-6" role="tab" aria-controls="tabset-3-6" aria-selected="false">LCS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
@@ -1988,7 +2011,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calib-simuls-metrics" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.9: Calibration Metrics on 200 Simulations for each Value of <span class="math inline">\(\alpha\)</span> (top) or <span class="math inline">\(\gamma\)</span> (bottom).</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.9: Calibration Metrics on 200 Simulations for each Value of <span class="math inline">\(\alpha\)</span> (top) or <span class="math inline">\(\gamma\)</span> (bottom).</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calib-simuls-metrics-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -2090,6 +2113,12 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  tb_calibration_curve_quant_alphas <span class="sc">|&gt;</span> </span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(tb_calibration_curve_quant_gammas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
 <p>Next, let us define a plot function to display the calibration curves for each value of one of the scaling parameter (<span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span>), for all the replications.</p>
 <p>If we want to add barplots showing the distributions of the true probabilities on top of the graphs, we need to define bins and compute the average number of observation in each bin over the 200 replications.</p>
 <div class="cell">
@@ -2138,9 +2167,12 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">nb_1_bins =</span> <span class="fu">mean</span>(nb_1_bins),</span>
 <span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let us save for use in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a>.</p>
+<p>Let us save for use in <a href="#sec-recalibration">Chapter&nbsp;<span class="quarto-unresolved-ref ref-noprefix">sec-recalibration</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(counts_samples, <span class="at">file =</span> <span class="st">"simul-calib-counts_samples.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
 </div>
 <p>For example, in the 200 simulations run with <span class="math inline">\(\alpha=1\)</span> and <span class="math inline">\(\gamma=3\)</span>:</p>
 <div class="cell">
@@ -2246,7 +2278,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb72-69"><a href="#cb72-69" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Lastly, let us visualize the calibration curves, using the <code class="sourceCode r"><span class="fu">plot_calibration_quant_simul</span>()</code> function.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">Varying <span class="math inline">\(\alpha\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">Varying <span class="math inline">\(\gamma\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
@@ -2261,7 +2293,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-quant-alpha-simuls" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.10: Calibration curve for the 200 replications for varying values of <span class="math inline">\(\alpha\)</span></figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.10: Calibration curve for the 200 replications for varying values of <span class="math inline">\(\alpha\)</span></figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-quant-alpha-simuls-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2279,7 +2311,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-quant-gamma-simuls" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.11: Calibration curve for the 200 replications for varying values of <span class="math inline">\(\gamma\)</span></figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.11: Calibration curve for the 200 replications for varying values of <span class="math inline">\(\gamma\)</span></figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-quant-gamma-simuls-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2390,6 +2422,12 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_locfit <span class="ot">&lt;-</span> </span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>  tb_calibration_curve_locfit_alphas <span class="sc">|&gt;</span> </span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(tb_calibration_curve_locfit_gammas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
 </div>
 <p>Let us define a function to plot the calibration curves for all simulation and values of one of the scaling parameter (<span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span>).</p>
 <!-- We would like to give an idea of the distribution of the true predicted probabilities. As we are in an experimental setup where we know the DGP, we can do so. But we will also show the 5th and 95th percentile of the values of the scores $p^u$, using vertical lines. As we plot the results obtained from 200 simulations, in each scenario (where $\alpha$ or $\gamma$ vary), to avoid showing 200 vertical lines, we will only show the average of the 5th percentile and the average of the 95th percentile computed over the 200 replications. -->
@@ -2517,7 +2555,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb80-74"><a href="#cb80-74" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Lastly, we can plot the graphs:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">Varying <span class="math inline">\(\alpha\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">Varying <span class="math inline">\(\gamma\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
@@ -2531,7 +2569,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-locfit-gamma-simuls" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.12: Calibration curve for different values of <span class="math inline">\(\gamma\)</span>, using local regression</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.12: Calibration curve for different values of <span class="math inline">\(\gamma\)</span>, using local regression</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-locfit-gamma-simuls-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2549,7 +2587,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-alpha-gamma-simuls" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.13: Calibration curve for different values of <span class="math inline">\(\gamma\)</span>, using local regression</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.13: Calibration curve for different values of <span class="math inline">\(\gamma\)</span>, using local regression</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-alpha-gamma-simuls-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2683,6 +2721,12 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb85-11"><a href="#cb85-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
 <p>Then, we define a function to plot the calibration curves for varying values of one of the scaling parameter (<span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\gamma\)</span>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Plot the calibration curve for a set of simulations, using local regression</span></span>
@@ -2745,7 +2789,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <span id="cb86-58"><a href="#cb86-58" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can now plot the curves:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Varying <span class="math inline">\(\alpha\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">Varying <span class="math inline">\(\gamma\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
@@ -2759,7 +2803,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-locfit-alpha-single" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.14: Calibration curve for different values of <span class="math inline">\(\alpha\)</span>, using local regression (for a single replication)</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.14: Calibration curve for different values of <span class="math inline">\(\alpha\)</span>, using local regression (for a single replication)</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-locfit-alpha-single-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2777,7 +2821,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-locfit-gamma-single" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.15: Calibration curve for different values of <span class="math inline">\(\alpha\)</span>, , using local regression (for a single replication</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.15: Calibration curve for different values of <span class="math inline">\(\alpha\)</span>, , using local regression (for a single replication</figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-locfit-gamma-single-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2791,7 +2835,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <section id="calibration-curve-with-moving-average-and-confidence-intervals" class="level3" data-number="1.6.3">
 <h3 data-number="1.6.3" class="anchored" data-anchor-id="calibration-curve-with-moving-average-and-confidence-intervals"><span class="header-section-number">1.6.3</span> Calibration Curve with Moving Average and Confidence Intervals</h3>
 <p>Instead of running 200 replications, we could also use the computed confidence interval returned by our <code class="sourceCode r"><span class="fu">local_ci_scores</span>()</code> function.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
+<div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">Varying <span class="math inline">\(\alpha\)</span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">Varying <span class="math inline">\(\gamma\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
@@ -2872,7 +2916,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-quant-alpha-single" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.16: Calibration curve for different values of <span class="math inline">\(\alpha\)</span></figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.16: Calibration curve for different values of <span class="math inline">\(\alpha\)</span></figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-quant-alpha-single-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2951,7 +2995,7 @@ MSE(h) = \frac{1}{n} \sum_{i=1}{n}\left(s(\boldsymbol x) - p\right)^2
 <div class="cell-output-display">
 <div id="fig-calibration-curve-quant-gamma-single" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;1.17: Calibration curve for different values of <span class="math inline">\(\gamma\)</span></figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.17: Calibration curve for different values of <span class="math inline">\(\gamma\)</span></figcaption><p></p>
 <p><img src="calibration_files/figure-html/fig-calibration-curve-quant-gamma-single-1.png" class="img-fluid figure-img" width="960"></p>
 </figure>
 </div>
@@ -2993,23 +3037,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -3074,92 +3104,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
