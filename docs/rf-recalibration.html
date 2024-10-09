@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration - 5&nbsp; Recalibration of Random Forests</title>
+<title>5&nbsp; Recalibration of Random Forests – From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -118,8 +125,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 	});
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -129,13 +163,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rf-single.html">Machine Learning and Calibration</a></li><li class="breadcrumb-item"><a href="./rf-recalibration.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rf-single.html">Machine Learning and Calibration</a></li><li class="breadcrumb-item"><a href="./rf-recalibration.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -144,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">From Uncertainty to Precision: Enhancing Binary Classifier Performance through Calibration</a> 
@@ -165,9 +199,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Calibration and Recalibration</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -188,9 +222,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Machine Learning and Calibration</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -217,9 +251,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Real-world Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -253,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -296,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rf-single.html">Machine Learning and Calibration</a></li><li class="breadcrumb-item"><a href="./rf-recalibration.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-ml-and-recalibration" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Recalibration of Random Forests</span></span></h1>
 </div>
@@ -311,29 +345,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
 
-<p>In this chapter, we recalibrate the predicted values estimated by a Random Forest (classifier and regressor), trained on simulated data (see <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>).</p>
-<p>The basic idea is to learn a function <span class="math inline">\(g(\cdot)\)</span> mapping scores <span class="math inline">\(s(x)\)</span> into probability estimates <span class="math inline">\(g(p) := \mathbb{E}[D \mid s(x) = p]\)</span>. To avoid overfitting, the training data while learning that mapping, we will rely on data from the calibration set, defined in the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code>.</p>
+
+<p>In this chapter, we recalibrate the predicted values estimated by a Random Forest (classifier and regressor), trained on simulated data (see <a href="rf-calibration.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a>).</p>
+<p>The basic idea is to learn a function <span class="math inline">\(g(\cdot)\)</span> mapping scores <span class="math inline">\(s(x)\)</span> into probability estimates <span class="math inline">\(g(p) := \mathbb{E}[D \mid s(x) =  p]\)</span>. To avoid overfitting, the training data while learning that mapping, we will rely on data from the calibration set, defined in the function <code class="sourceCode r"><span class="fu">get_samples</span>()</code>.</p>
 <p>To avoid overfitting, the data will be split into training (used to train the random forest), calibration (to recalibrate the scores) and test sets (to assess the performances on unseen data).</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the definitions of colors.</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<details>
+<details class="code-fold">
 <summary>Display the definitions of colors.</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wongBlack     <span class="ot">&lt;-</span> <span class="st">"#000000"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>wongGold      <span class="ot">&lt;-</span> <span class="st">"#E69F00"</span></span>
@@ -347,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="sec-ml-recalib-dgp" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="sec-ml-recalib-dgp"><span class="header-section-number">5.1</span> Data Generating Process</h2>
-<p>We use the same DGP as in <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>.</p>
+<p>We use the same DGP as in <a href="rf-calibration.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Simulates data</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -388,9 +424,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="splitting-the-dataset" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="splitting-the-dataset"><span class="header-section-number">5.2</span> Splitting the dataset</h2>
-<p>The process applied in this chapter is divided the following parts: 1. get the trained Random Forest classifier or regressions from <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a> to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> (<em>i.e.</em>, either <span class="math inline">\(\hat{p}_{\text{score}}\)</span> or <span class="math inline">\(\hat{p}_{\text{vote}}\)</span>) 2. recalibrating the obtained scores through different approaches defined in <a href="recalibration.html">Chapter&nbsp;<span>2</span></a> 3. recalculating the different calibration metrics on the recalibrated predicted scores.</p>
+<p>The process applied in this chapter is divided the following parts: 1. get the trained Random Forest classifier or regressions from <a href="rf-calibration.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a> to obtain the predicted scores <span class="math inline">\(\hat{s}(\boldsymbol x_i)\)</span> (<em>i.e.</em>, either <span class="math inline">\(\hat{p}_{\text{score}}\)</span> or <span class="math inline">\(\hat{p}_{\text{vote}}\)</span>) 2. recalibrating the obtained scores through different approaches defined in <a href="recalibration.html" class="quarto-xref">Chapter&nbsp;<span>2</span></a> 3. recalculating the different calibration metrics on the recalibrated predicted scores.</p>
 <p>Therefore, it is necessary to split the dataset into three parts: 1. a train set: to train the Random Forest classifier, 2. a calibration set: to train the recalibrator, 3. a test set: on which we will compute the calibration metrics.</p>
-<p>To split the data, use the <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>.</p>
+<p>To split the data, use the <code class="sourceCode r"><span class="fu">get_samples</span>()</code> from <a href="rf-calibration.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Get calibration/test samples from the DGP</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -438,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We considered 200 replications for the simulations in <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>. In each simulation, we drew 2,000 observation from the data generation process.</p>
+<p>We considered 200 replications for the simulations in <a href="rf-calibration.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a>. In each simulation, we drew 2,000 observation from the data generation process.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>n_repl <span class="ot">&lt;-</span> <span class="dv">200</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="dv">2000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -446,7 +482,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="load-previous-simulations" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="load-previous-simulations"><span class="header-section-number">5.3</span> Load Previous Simulations</h2>
-<p>Let us load the simulations obtained in <a href="rf-calibration.html">Chapter&nbsp;<span>4</span></a>. The regressions tasks:</p>
+<p>Let us load the simulations obtained in <a href="rf-calibration.html" class="quarto-xref">Chapter&nbsp;<span>4</span></a>. The regressions tasks:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"output/simulations/scores_simul_rf.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -535,7 +571,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 91 more rows</code></pre>
 </div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(\hat{s}\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-platt">Figure&nbsp;<span>5.1</span></a>.</p>
+<p>The predicted probabilities <span class="math inline">\(\hat{s}\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-platt" class="quarto-xref">Figure&nbsp;<span>5.1</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -549,10 +585,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span></span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-recalib-platt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.1: Recalibration Using Platt Scaling</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-platt-1.png" class="img-fluid figure-img" width="480"></p>
+<div id="fig-recalib-platt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Recalibration Using Platt Scaling
+</figcaption>
+<div aria-describedby="fig-recalib-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-platt-1.png" class="img-fluid figure-img" width="480">
+</div>
 </figure>
 </div>
 </div>
@@ -584,7 +624,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">scores_c =</span> score_c_isotonic_linspace</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-isotonic">Figure&nbsp;<span>5.2</span></a>.</p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-isotonic" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -598,10 +638,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span></span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-recalib-isotonic" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.2: Recalibration Using Isotonic Regression</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-isotonic-1.png" class="img-fluid figure-img" width="480"></p>
+<div id="fig-recalib-isotonic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Recalibration Using Isotonic Regression
+</figcaption>
+<div aria-describedby="fig-recalib-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-isotonic-1.png" class="img-fluid figure-img" width="480">
+</div>
 </figure>
 </div>
 </div>
@@ -638,7 +682,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">scores_c =</span> score_c_beta_linspace</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-beta">Figure&nbsp;<span>5.3</span></a></p>
+<p>The predicted probabilities <span class="math inline">\(p_u\)</span> will then be transformed according to the logistic model depicted in <a href="#fig-recalib-beta" class="quarto-xref">Figure&nbsp;<span>5.3</span></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.1</span>, <span class="fl">4.1</span>, <span class="fl">2.1</span>, <span class="fl">2.1</span>))</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
@@ -652,10 +696,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span></span>
 <span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-recalib-beta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.3: Recalibration Using Beta Calibration</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-beta-1.png" class="img-fluid figure-img" width="480"></p>
+<div id="fig-recalib-beta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Recalibration Using Beta Calibration
+</figcaption>
+<div aria-describedby="fig-recalib-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-beta-1.png" class="img-fluid figure-img" width="480">
+</div>
 </figure>
 </div>
 </div>
@@ -700,10 +748,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span></span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-recalib-locfic-0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.4: Recalibration Using Local Regression</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-locfic-0-1.png" class="img-fluid figure-img" width="480"></p>
+<div id="fig-recalib-locfic-0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-locfic-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Recalibration Using Local Regression
+</figcaption>
+<div aria-describedby="fig-recalib-locfic-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-locfic-0-1.png" class="img-fluid figure-img" width="480">
+</div>
 </figure>
 </div>
 </div>
@@ -739,10 +791,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span></span>
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-recalib-locfic-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.5: Recalibration Using Local Regression</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-locfic-1-1.png" class="img-fluid figure-img" width="480"></p>
+<div id="fig-recalib-locfic-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-locfic-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: Recalibration Using Local Regression
+</figcaption>
+<div aria-describedby="fig-recalib-locfic-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-locfic-1-1.png" class="img-fluid figure-img" width="480">
+</div>
 </figure>
 </div>
 </div>
@@ -778,10 +834,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"#D55E00"</span></span>
 <span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-recalib-locfic-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.6: Recalibration Using Local Regression</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-locfic-2-1.png" class="img-fluid figure-img" width="480"></p>
+<div id="fig-recalib-locfic-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-locfic-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: Recalibration Using Local Regression
+</figcaption>
+<div aria-describedby="fig-recalib-locfic-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-locfic-2-1.png" class="img-fluid figure-img" width="480">
+</div>
 </figure>
 </div>
 </div>
@@ -793,7 +853,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="helper-functions" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="helper-functions"><span class="header-section-number">5.5</span> Helper Functions</h2>
-<p>First, we need the functions that fit the Random Forest (for both regression and classification) and the functions that compute the performance metrics and the calibration metrics (those defined in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>).</p>
+<p>First, we need the functions that fit the Random Forest (for both regression and classification) and the functions that compute the performance metrics and the calibration metrics (those defined in <a href="calibration.html" class="quarto-xref">Chapter&nbsp;<span>1</span></a>).</p>
 <section id="fit-the-random-forest" class="level3" data-number="5.5.1">
 <h3 data-number="5.5.1" class="anchored" data-anchor-id="fit-the-random-forest"><span class="header-section-number">5.5.1</span> Fit the Random Forest</h3>
 <p>In the case of regression:</p>
@@ -1093,7 +1153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="recalibration-functions" class="level3" data-number="5.5.4">
 <h3 data-number="5.5.4" class="anchored" data-anchor-id="recalibration-functions"><span class="header-section-number">5.5.4</span> Recalibration Functions</h3>
-<p>We define the <code class="sourceCode r"><span class="fu">recalibrate</span>()</code> function which recalibrates a model using the observed events <span class="math inline">\(d\)</span>, the predicted associated probabilities <span class="math inline">\(p\)</span> and a given recalibration technique (as presented above in <a href="recalibration.html#sec-recalibration-methods"><span>Section&nbsp;2.2</span></a>).</p>
+<p>We define the <code class="sourceCode r"><span class="fu">recalibrate</span>()</code> function which recalibrates a model using the observed events <span class="math inline">\(d\)</span>, the predicted associated probabilities <span class="math inline">\(p\)</span> and a given recalibration technique (as presented above in <a href="recalibration.html#sec-recalibration-methods" class="quarto-xref"><span>Section 2.2</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Recalibrates scores using a calibration</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
@@ -1437,7 +1497,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="recalibration-standard-metrics" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="recalibration-standard-metrics"><span class="header-section-number">5.7</span> Recalibration Standard Metrics</h2>
-<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on recalibrated predicted scores (see <a href="calibration.html#sec-calib-standard-metrics-simul"><span>Section&nbsp;1.4</span></a> in <a href="calibration.html">Chapter&nbsp;<span>1</span></a>):</p>
+<p>We (re)define the function <code class="sourceCode r"><span class="fu">compute_gof_simul</span>()</code> to apply <code class="sourceCode r"><span class="fu">compute_gof</span>()</code>, defined above, to compute the different standard performance metrics on recalibrated predicted scores (see <a href="calibration.html#sec-calib-standard-metrics-simul" class="quarto-xref"><span>Section 1.4</span></a> in <a href="calibration.html" class="quarto-xref">Chapter&nbsp;<span>1</span></a>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes goodness of fit metrics for a replication</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
@@ -1670,15 +1730,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> regression_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-regression-platt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.7: Standard metrics on Random Forest predicted scores (regression) after recalibration using Platt scaling.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-platt-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-regression-platt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-regression-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.7: Standard metrics on Random Forest predicted scores (regression) after recalibration using Platt scaling.
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-regression-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-platt-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1686,15 +1750,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> regression_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-regression-iso" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.8: Standard metrics on Random Forest predicted scores (regression) after recalibration using isotonic regression.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-iso-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-regression-iso" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-regression-iso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.8: Standard metrics on Random Forest predicted scores (regression) after recalibration using isotonic regression.
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-regression-iso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-iso-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1702,15 +1770,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> regression_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-regression-beta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.9: Standard metrics on Random Forest predicted scores (regression) after recalibration using Beta calibration.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-beta-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-regression-beta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-regression-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.9: Standard metrics on Random Forest predicted scores (regression) after recalibration using Beta calibration.
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-regression-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-beta-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1718,15 +1790,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-5-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-4-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> regression_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-regression-locfit-0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.10: Standard metrics on Random Forest predicted scores (regression) after recalibration using local regression (degree 0).</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-locfit-0-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-regression-locfit-0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-regression-locfit-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.10: Standard metrics on Random Forest predicted scores (regression) after recalibration using local regression (degree 0).
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-regression-locfit-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-locfit-0-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1734,15 +1810,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-5-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-5-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> regression_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-regression-locfit-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.11: Standard metrics on Random Forest predicted scores (regression) after recalibration using local regression (degree 1).</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-locfit-1-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-regression-locfit-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-regression-locfit-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.11: Standard metrics on Random Forest predicted scores (regression) after recalibration using local regression (degree 1).
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-regression-locfit-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-locfit-1-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1750,15 +1830,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-5-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-6-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> regression_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-regression-locfit-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.12: Standard metrics on Random Forest predicted scores (regression) after recalibration using local regression (degree 2).</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-locfit-2-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-regression-locfit-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-regression-locfit-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.12: Standard metrics on Random Forest predicted scores (regression) after recalibration using local regression (degree 2).
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-regression-locfit-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-regression-locfit-2-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1774,15 +1858,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> classification_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-classification-platt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.13: Standard metrics on Random Forest predicted scores (classification) after recalibration using Platt scaling.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-platt-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-classification-platt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-classification-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.13: Standard metrics on Random Forest predicted scores (classification) after recalibration using Platt scaling.
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-classification-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-platt-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1790,15 +1878,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> classification_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-classification-iso" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.14: Standard metrics on Random Forest predicted scores (classification) after recalibration using isotonic regression.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-iso-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-classification-iso" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-classification-iso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.14: Standard metrics on Random Forest predicted scores (classification) after recalibration using isotonic regression.
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-classification-iso-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-iso-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1806,15 +1898,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> classification_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-classification-beta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.15: Standard metrics on Random Forest predicted scores (classification) after recalibration using Beta calibration.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-beta-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-classification-beta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-classification-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.15: Standard metrics on Random Forest predicted scores (classification) after recalibration using Beta calibration.
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-classification-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-beta-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1822,15 +1918,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> classification_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-classification-locfit-0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.16: Standard metrics on Random Forest predicted scores (classification) after recalibration using local regression (degree 0).</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-locfit-0-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-classification-locfit-0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-classification-locfit-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.16: Standard metrics on Random Forest predicted scores (classification) after recalibration using local regression (degree 0).
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-classification-locfit-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-locfit-0-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1838,15 +1938,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-6-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-5-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> classification_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-classification-locfit-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.17: Standard metrics on Random Forest predicted scores (classification) after recalibration using local regression (degree 1).</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-locfit-1-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-classification-locfit-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-classification-locfit-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.17: Standard metrics on Random Forest predicted scores (classification) after recalibration using local regression (degree 1).
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-classification-locfit-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-locfit-1-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1854,15 +1958,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-6-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-6-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes to produce the Figure.</summary>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot_simuls_metrics</span>(<span class="at">tb_metrics =</span> classification_recalib_metrics, <span class="at">metrics =</span> metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-metrics-gof-rf-recalib-classification-locfit-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.18: Standard metrics on Random Forest predicted scores (classification) after recalibration using local regression (degree 2).</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-locfit-2-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-metrics-gof-rf-recalib-classification-locfit-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-metrics-gof-rf-recalib-classification-locfit-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.18: Standard metrics on Random Forest predicted scores (classification) after recalibration using local regression (degree 2).
+</figcaption>
+<div aria-describedby="fig-metrics-gof-rf-recalib-classification-locfit-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-metrics-gof-rf-recalib-classification-locfit-2-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1882,7 +1990,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>calibration_rf_simuls_c <span class="ot">&lt;-</span> </span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(simul_recalib_rf, <span class="st">"calib_metrics"</span>) <span class="sc">|&gt;</span> </span>
@@ -1947,10 +2055,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb76-61"><a href="#cb76-61" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-recalib-metrics-simul-rf" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.19: Calibration metrics for various recalibration techniques applied to the Random Forest scores (regression); results from the 200 replications.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-recalib-metrics-simul-rf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-metrics-simul-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.19: Calibration metrics for various recalibration techniques applied to the Random Forest scores (regression); results from the 200 replications.
+</figcaption>
+<div aria-describedby="fig-recalib-metrics-simul-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -1958,7 +2070,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>calibration_rf_simuls_vote_c <span class="ot">&lt;-</span> </span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(simul_recalib_rf_vote, <span class="st">"calib_metrics"</span>) <span class="sc">|&gt;</span> </span>
@@ -2023,10 +2135,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb77-61"><a href="#cb77-61" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-recalib-metrics-simul-rf-vote" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.20: Calibration metrics for various recalibration techniques applied to the Random Forest scores (classification); results from the 200 replications.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-vote-1.png" class="img-fluid figure-img" width="960"></p>
+<div id="fig-recalib-metrics-simul-rf-vote" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-metrics-simul-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.20: Calibration metrics for various recalibration techniques applied to the Random Forest scores (classification); results from the 200 replications.
+</figcaption>
+<div aria-describedby="fig-recalib-metrics-simul-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-vote-1.png" class="img-fluid figure-img" width="960">
+</div>
 </figure>
 </div>
 </div>
@@ -2035,7 +2151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="tabset-9-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-3-tab">
 <p>We bind the results and define a plotting function.</p>
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R Codes</summary>
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>calibration_rf_simuls_both <span class="ot">&lt;-</span> </span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(simul_recalib_rf, <span class="st">"calib_metrics"</span>) <span class="sc">|&gt;</span> </span>
@@ -2138,15 +2254,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_metric_simuls</span>(<span class="at">metric =</span> <span class="st">"mse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-recalib-metrics-simul-rf-both-mse" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.21: True MSE for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-mse-1.png" class="img-fluid figure-img" width="768"></p>
+<div id="fig-recalib-metrics-simul-rf-both-mse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-metrics-simul-rf-both-mse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.21: True MSE for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.
+</figcaption>
+<div aria-describedby="fig-recalib-metrics-simul-rf-both-mse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-mse-1.png" class="img-fluid figure-img" width="768">
+</div>
 </figure>
 </div>
 </div>
@@ -2154,15 +2274,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_metric_simuls</span>(<span class="at">metric =</span> <span class="st">"brier"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-recalib-metrics-simul-rf-both-brier" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.22: Brier Score for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-brier-1.png" class="img-fluid figure-img" width="768"></p>
+<div id="fig-recalib-metrics-simul-rf-both-brier" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-metrics-simul-rf-both-brier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.22: Brier Score for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.
+</figcaption>
+<div aria-describedby="fig-recalib-metrics-simul-rf-both-brier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-brier-1.png" class="img-fluid figure-img" width="768">
+</div>
 </figure>
 </div>
 </div>
@@ -2170,15 +2294,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-8-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_metric_simuls</span>(<span class="at">metric =</span> <span class="st">"ece"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-recalib-metrics-simul-rf-both-ece" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.23: Expected Calibration Error for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-ece-1.png" class="img-fluid figure-img" width="768"></p>
+<div id="fig-recalib-metrics-simul-rf-both-ece" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-metrics-simul-rf-both-ece-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.23: Expected Calibration Error for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.
+</figcaption>
+<div aria-describedby="fig-recalib-metrics-simul-rf-both-ece-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-ece-1.png" class="img-fluid figure-img" width="768">
+</div>
 </figure>
 </div>
 </div>
@@ -2186,15 +2314,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-8-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-4-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_metric_simuls</span>(<span class="at">metric =</span> <span class="st">"qmse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-recalib-metrics-simul-rf-both-qmse" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.24: Quantile-based Mean Squared Error for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-qmse-1.png" class="img-fluid figure-img" width="768"></p>
+<div id="fig-recalib-metrics-simul-rf-both-qmse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-metrics-simul-rf-both-qmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.24: Quantile-based Mean Squared Error for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.
+</figcaption>
+<div aria-describedby="fig-recalib-metrics-simul-rf-both-qmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-qmse-1.png" class="img-fluid figure-img" width="768">
+</div>
 </figure>
 </div>
 </div>
@@ -2202,15 +2334,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-8-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-5-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_metric_simuls</span>(<span class="at">metric =</span> <span class="st">"wmse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-recalib-metrics-simul-rf-both-wmse" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.25: Weighted Mean Squared Error for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-wmse-1.png" class="img-fluid figure-img" width="768"></p>
+<div id="fig-recalib-metrics-simul-rf-both-wmse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-recalib-metrics-simul-rf-both-wmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.25: Weighted Mean Squared Error for the Random Forest (regression or classification) scores with various scores used as predictions (true probabilities, uncalibrated scores, recalibreated scores), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>; results from the 200 replications.
+</figcaption>
+<div aria-describedby="fig-recalib-metrics-simul-rf-both-wmse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-recalib-metrics-simul-rf-both-wmse-1.png" class="img-fluid figure-img" width="768">
+</div>
 </figure>
 </div>
 </div>
@@ -2665,13 +2801,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Now, we can plot the calibration curve on each sample (calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-c-rf">Figure&nbsp;<span>5.26</span></a> (regression), in <a href="#fig-calib-curve-quantile-c-rf-vote">Figure&nbsp;<span>5.27</span></a> (classification). The comparison between the two types of random forests are then made on a single grapg for each recalibration method from <a href="#fig-calib-curve-quantile-c-rf-both-platt">Figure&nbsp;<span>5.28</span></a> to <a href="#fig-calib-curve-quantile-c-rf-both-locfit2">Figure&nbsp;<span>5.33</span></a>.</p>
+<p>Now, we can plot the calibration curve on each sample (calibration, test). Each line corresponds to the calibration curve of a single replicaiton of the simulations. The curves are shown in <a href="#fig-calib-curve-quantile-c-rf" class="quarto-xref">Figure&nbsp;<span>5.26</span></a> (regression), in <a href="#fig-calib-curve-quantile-c-rf-vote" class="quarto-xref">Figure&nbsp;<span>5.27</span></a> (classification). The comparison between the two types of random forests are then made on a single grapg for each recalibration method from <a href="#fig-calib-curve-quantile-c-rf-both-platt" class="quarto-xref">Figure&nbsp;<span>5.28</span></a> to <a href="#fig-calib-curve-quantile-c-rf-both-locfit2" class="quarto-xref">Figure&nbsp;<span>5.33</span></a>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">Regression</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">Classification</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-3" role="tab" aria-controls="tabset-12-3" aria-selected="false">Both</a></li></ul>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"calibration"</span>, <span class="st">"test"</span>)</span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>sample_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Calibration"</span>, <span class="st">"Test"</span>)</span>
@@ -2724,10 +2860,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb96-49"><a href="#cb96-49" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.26: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.26: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -2735,7 +2875,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"calibration"</span>, <span class="st">"test"</span>)</span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>sample_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Calibration"</span>, <span class="st">"Test"</span>)</span>
@@ -2788,10 +2928,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb97-49"><a href="#cb97-49" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf-vote" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.27: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-vote-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf-vote" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.27: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-vote-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -2799,7 +2943,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-12-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display code to show the function used to create the Figures.</summary>
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_quant_c_rf_both <span class="ot">&lt;-</span> </span>
 <span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  tb_calibration_curve_quant_c_rf <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Regression"</span>) <span class="sc">|&gt;</span> </span>
@@ -2867,15 +3011,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_quant_both</span>(<span class="at">method =</span> <span class="st">"platt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf-both-platt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.28: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using Platt-scaling (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-platt-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf-both-platt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-both-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.28: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using Platt-scaling (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-both-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-platt-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -2883,15 +3031,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_quant_both</span>(<span class="at">method =</span> <span class="st">"isotonic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf-both-isotonic" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.29: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using Isotonic regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-isotonic-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf-both-isotonic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-both-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.29: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using Isotonic regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-both-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-isotonic-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -2899,15 +3051,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-11-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_quant_both</span>(<span class="at">method =</span> <span class="st">"beta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf-both-beta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.30: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using Beta regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-beta-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf-both-beta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-both-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.30: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using Beta regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-both-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-beta-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -2915,15 +3071,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-11-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-4-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_quant_both</span>(<span class="at">method =</span> <span class="st">"locfit_0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf-both-locfit0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.31: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using local regression with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">0</span></code> (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-locfit0-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf-both-locfit0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-both-locfit0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.31: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using local regression with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">0</span></code> (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-both-locfit0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-locfit0-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -2931,15 +3091,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-11-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-5-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_quant_both</span>(<span class="at">method =</span> <span class="st">"locfit_1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf-both-locfit1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.32: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using local regression with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">1</span></code> (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-locfit1-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf-both-locfit1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-both-locfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.32: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using local regression with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">1</span></code> (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-both-locfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-locfit1-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -2947,15 +3111,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-11-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-6-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_quant_both</span>(<span class="at">method =</span> <span class="st">"locfit_2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-quantile-c-rf-both-locfit2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.33: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using local regression with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">2</span></code> (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-locfit2-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-quantile-c-rf-both-locfit2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-quantile-c-rf-both-locfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.33: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with quantile-based bins, using uncalibrated scores (left) or recalibrated scores using local regression with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">2</span></code> (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-quantile-c-rf-both-locfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-quantile-c-rf-both-locfit2-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3052,7 +3220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"calibration"</span>, <span class="st">"test"</span>)</span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>sample_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Calibration"</span>, <span class="st">"Test"</span>)</span>
@@ -3120,10 +3288,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb111-64"><a href="#cb111-64" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.34: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with local regression, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.34: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with local regression, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3131,7 +3303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"calibration"</span>, <span class="st">"test"</span>)</span>
 <span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>sample_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Calibration"</span>, <span class="st">"Test"</span>)</span>
@@ -3199,10 +3371,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb112-64"><a href="#cb112-64" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf-vote" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.35: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with local regression, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-vote-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf-vote" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.35: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with local regression, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-vote-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3210,7 +3386,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-15-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display code to show the function used to create the Figures.</summary>
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_locfit_c_rf_vote_both <span class="ot">&lt;-</span> </span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>  tb_calibration_curve_locfit_c_rf <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Regression"</span>) <span class="sc">|&gt;</span> </span>
@@ -3296,15 +3472,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_locfit_both</span>(<span class="at">method =</span> <span class="st">"platt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf-both-platt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.36: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Platt-scaling (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-platt-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf-both-platt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-both-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.36: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Platt-scaling (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-both-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-platt-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3312,15 +3492,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_locfit_both</span>(<span class="at">method =</span> <span class="st">"isotonic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf-both-isotonic" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.37: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Isotonic regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-isotonic-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf-both-isotonic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-both-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.37: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Isotonic regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-both-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-isotonic-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3328,15 +3512,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-14-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_locfit_both</span>(<span class="at">method =</span> <span class="st">"beta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf-both-beta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.38: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Beta regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-beta-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf-both-beta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-both-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.38: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Beta regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-both-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-beta-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3344,15 +3532,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-14-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-4-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_locfit_both</span>(<span class="at">method =</span> <span class="st">"locfit_0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf-both-locfit0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.39: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Local regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">0</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-locfit0-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf-both-locfit0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-both-locfit0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.39: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Local regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">0</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-both-locfit0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-locfit0-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3360,15 +3552,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-14-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-5-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_locfit_both</span>(<span class="at">method =</span> <span class="st">"locfit_1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf-both-locfit1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.40: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Local regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">1</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-locfit1-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf-both-locfit1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-both-locfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.40: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Local regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">1</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-both-locfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-locfit1-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3376,15 +3572,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-14-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-6-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_locfit_both</span>(<span class="at">method =</span> <span class="st">"locfit_2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-locfit-c-rf-both-locfit2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.41: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Local regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">2</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-locfit2-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-locfit-c-rf-both-locfit2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-locfit-c-rf-both-locfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.41: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with local regression, using uncalibrated scores (left) or recalibrated scores using Local regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">2</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-locfit-c-rf-both-locfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-locfit-c-rf-both-locfit2-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3480,7 +3680,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"calibration"</span>, <span class="st">"test"</span>)</span>
 <span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>sample_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Calibration"</span>, <span class="st">"Test"</span>)</span>
@@ -3548,10 +3748,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb126-64"><a href="#cb126-64" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.42: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.42: Calibration curve for the 200 replications of the estimation of the Random Forest (regression), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3559,7 +3763,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"calibration"</span>, <span class="st">"test"</span>)</span>
 <span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>sample_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Calibration"</span>, <span class="st">"Test"</span>)</span>
@@ -3627,10 +3831,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb127-64"><a href="#cb127-64" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf-vote" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.43: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-vote-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf-vote" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.43: Calibration curve for the 200 replications of the estimation of the Random Forest (classification), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-vote-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-vote-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3638,7 +3846,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-18-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display code to show the function used to create the Figures.</summary>
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>tb_calibration_curve_ma_c_rf_vote_both <span class="ot">&lt;-</span> </span>
 <span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>  tb_calibration_curve_ma_c_rf <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Regression"</span>) <span class="sc">|&gt;</span> </span>
@@ -3724,15 +3932,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="tab-content">
 <div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ma_both</span>(<span class="at">method =</span> <span class="st">"platt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf-both-platt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.44: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Platt-scaling (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-platt-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf-both-platt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-both-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.44: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Platt-scaling (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-both-platt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-platt-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3740,15 +3952,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ma_both</span>(<span class="at">method =</span> <span class="st">"isotonic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf-both-isotonic" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.45: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Isotonic regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-isotonic-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf-both-isotonic" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-both-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.45: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Isotonic regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-both-isotonic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-isotonic-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3756,15 +3972,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-17-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-3-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ma_both</span>(<span class="at">method =</span> <span class="st">"beta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf-both-beta" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.46: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Beta regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-beta-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf-both-beta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-both-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.46: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Beta regression (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-both-beta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-beta-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3772,15 +3992,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-17-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-4-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ma_both</span>(<span class="at">method =</span> <span class="st">"locfit_0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf-both-locfit0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.47: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Local Regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">0</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-locfit0-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf-both-locfit0" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-both-locfit0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.47: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Local Regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">0</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-both-locfit0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-locfit0-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3788,15 +4012,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-17-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-5-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ma_both</span>(<span class="at">method =</span> <span class="st">"locfit_1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf-both-locfit1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.48: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Local Regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">1</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-locfit1-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf-both-locfit1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-both-locfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.48: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Local Regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">1</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-both-locfit1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-locfit1-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3804,15 +4032,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div id="tabset-17-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-6-tab">
 <div class="cell">
-<details>
+<details class="code-fold">
 <summary>Display the R codes used to create the Figure.</summary>
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_ma_both</span>(<span class="at">method =</span> <span class="st">"locfit_2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-calib-curve-ma-c-rf-both-locfit2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;5.49: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Local Regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">2</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.</figcaption>
-<p><img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-locfit2-1.png" class="img-fluid figure-img" width="1152"></p>
+<div id="fig-calib-curve-ma-c-rf-both-locfit2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-calib-curve-ma-c-rf-both-locfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.49: Calibration curve for the 200 replications of the estimation of the Random Forest (regression on top, classification at the bottom), obtained with moving averages, using uncalibrated scores (left) or recalibrated scores using Local Regression (with <code class="sourceCode r">deg<span class="ot">=</span><span class="dv">2</span></code>) (right), on the <span style="color:#D55E00">calibration set</span> and on the <span style="color:#009E73">test set</span>.
+</figcaption>
+<div aria-describedby="fig-calib-curve-ma-c-rf-both-locfit2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="rf-recalibration_files/figure-html/fig-calib-curve-ma-c-rf-both-locfit2-1.png" class="img-fluid figure-img" width="1152">
+</div>
 </figure>
 </div>
 </div>
@@ -3864,18 +4096,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -3907,11 +4128,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -3921,8 +4181,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -3934,7 +4203,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -3978,6 +4370,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -4003,6 +4396,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -4064,17 +4483,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rf-calibration.html" class="pagination-link">
+      <a href="./rf-calibration.html" class="pagination-link" aria-label="Calibration of Random Forests">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Calibration of Random Forests</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./rf-grid-search.html" class="pagination-link">
+      <a href="./rf-grid-search.html" class="pagination-link" aria-label="Grid Search">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Grid Search</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
